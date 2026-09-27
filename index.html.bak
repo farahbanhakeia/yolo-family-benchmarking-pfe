@@ -1,0 +1,4066 @@
+<!DOCTYPE html>
+
+
+
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>YOLO Benchmark Platform — PFE</title>
+
+  <!-- Polices : Poppins (titres / display) + Inter (texte / données) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- ==========================================================================
+       BARRE DE PROGRESSION GLOBALE
+  =========================================================================== -->
+  <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progress-fill"></div></div>
+
+  <!-- ==========================================================================
+       BARRE SUPÉRIEURE — logo court, titre du projet, bouton menu / plein écran
+  =========================================================================== -->
+  <header class="topbar">
+    <div class="topbar-brand">
+      
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn text-btn" id="btn-fullscreen" title="Plein écran (F)">
+        ⛶
+      </button>
+      <button class="icon-btn text-btn" id="btn-menu" title="Navigation (M)">
+        Sommaire
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MENU DE NAVIGATION — panneau latéral listant les 17 diapositives
+  =========================================================================== -->
+  <nav class="slide-menu" id="slide-menu" aria-hidden="true">
+    <div class="slide-menu-inner">
+      <p class="slide-menu-title">Sommaire</p>
+      <ol id="slide-menu-list" class="slide-menu-list"><!-- généré par script.js --></ol>
+    </div>
+  </nav>
+  <div class="menu-scrim" id="menu-scrim"></div>
+
+  <!-- ==========================================================================
+       CONTENEUR PRINCIPAL DES DIAPOSITIVES
+  =========================================================================== -->
+  <main class="deck" id="deck">
+
+    <!-- ======================= SLIDE 1 — PAGE DE GARDE ======================= -->
+    <section class="slide" data-title="Page de garde">
+      <div class="slide-inner cover">
+        <div class="cover-bg" aria-hidden="true">
+          <svg class="cover-network" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+            <g class="cover-net-lines" stroke="url(#coverGrad)" stroke-width="1">
+              <line x1="60" y1="120" x2="260" y2="60"/><line x1="260" y1="60" x2="480" y2="140"/>
+              <line x1="480" y1="140" x2="700" y2="90"/><line x1="60" y1="120" x2="180" y2="280"/>
+              <line x1="180" y1="280" x2="380" y2="230"/><line x1="380" y1="230" x2="480" y2="140"/>
+              <line x1="380" y1="230" x2="560" y2="330"/><line x1="560" y1="330" x2="700" y2="90"/>
+              <line x1="180" y1="280" x2="140" y2="460"/><line x1="380" y1="230" x2="420" y2="440"/>
+              <line x1="560" y1="330" x2="650" y2="480"/><line x1="140" y1="460" x2="420" y2="440"/>
+              <line x1="420" y1="440" x2="650" y2="480"/>
+            </g>
+            <defs>
+              <linearGradient id="coverGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#10B8CE"/><stop offset="1" stop-color="#0B2A4A"/>
+              </linearGradient>
+            </defs>
+            <g class="cover-net-dots" fill="#0B2A4A">
+              <circle cx="60" cy="120" r="5"/><circle cx="260" cy="60" r="4"/><circle cx="480" cy="140" r="6"/>
+              <circle cx="700" cy="90" r="4"/><circle cx="180" cy="280" r="5"/><circle cx="380" cy="230" r="7"/>
+              <circle cx="560" cy="330" r="5"/><circle cx="140" cy="460" r="4"/><circle cx="420" cy="440" r="6"/>
+              <circle cx="650" cy="480" r="4"/>
+            </g>
+          </svg>
+        </div>
+
+        <img src="logo.png" alt="Logo Faculté Pluridisciplinaire de Nador" class="cover-logo cover-logo-left" />
+        <img src="logo.png" alt="Logo Faculté Pluridisciplinaire de Nador" class="cover-logo cover-logo-right" />
+
+        <div class="cover-top">
+          <p class="cover-univ">Université Mohammed Premier — Oujda</p>
+          <p class="cover-fac">Faculté Pluridisciplinaire de Nador</p>
+          <p class="cover-dept">Master Sciences Des Données et Systèmes Intelligents</p>
+        </div>
+
+        <div class="cover-mid">
+          <span class="eyebrow-pill">Présentation du Mémoire de Fin d'Études</span>
+          <h1 class="cover-title">Survey On Object Detection <br><span class="grad-text">YOLO</span>Family Of Models</h1>
+        </div>
+
+        <div class="cover-bottom">
+          <div class="cover-people">
+            <div class="cover-person">
+              <span class="cover-person-label">Réalisée par</span>
+              <span class="cover-person-name">Farah Banhakeia</span>
+            </div>
+            <div class="cover-divider"></div>
+            <div class="cover-person">
+              <span class="cover-person-label">Encadré par</span>
+              <span class="cover-person-name">Pr. Anas Charroud</span>
+            </div>
+          </div>
+          <span class="cover-year">Année universitaire 2025 / 2026</span>
+        </div>
+      </div>
+    </section>
+    <style>
+      .slide[data-title="Page de garde"] {
+  position: relative;
+}
+
+.cover-logo {
+  position: absolute;
+  top: 5px;
+  width: 130px;
+  height: auto;
+  z-index: 5;
+}
+
+.cover-logo-left {
+    position: absolute;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    
+}
+
+.cover-logo-right {
+    position: absolute;
+    right: 0;
+    margin: 0;
+    padding: 0;
+}
+    </style>
+    <!-- ======================= SLIDE 2 — PLAN DE LA PRÉSENTATION ======================= -->
+    <section class="slide" data-title="Plan de la présentation">
+      <div class="slide-inner">
+        <p class="eyebrow">Sommaire</p>
+        <h2 class="slide-title">Plan de la présentation</h2>
+
+        <div class="plan-wrap">
+          <ol class="plan-timeline reveal-stagger">
+            <li class="plan-item active">
+              <span class="plan-marker"></span>
+              <span class="plan-num">01</span>
+              <span class="plan-label">Introduction </span>
+            </li>
+            <li class="plan-item">
+              <span class="plan-marker"></span>
+              <span class="plan-num">02</span>
+              <span class="plan-label">Contexte et problématique</span>
+            </li>
+            <li class="plan-item">
+              <span class="plan-marker"></span>
+              <span class="plan-num">03</span>
+              <span class="plan-label">Fondements de la détection d'objets</span>
+            </li>
+            <li class="plan-item">
+              <span class="plan-marker"></span>
+              <span class="plan-num">04</span>
+              <span class="plan-label">État de l'art : la famille YOLO</span>
+            </li>
+            <li class="plan-item">
+              <span class="plan-marker"></span>
+              <span class="plan-num">05</span>
+              <span class="plan-label">Présentation de la plateforme </span>
+            </li>
+            <li class="plan-item">
+              <span class="plan-marker"></span>
+              <span class="plan-num">06</span>
+              <span class="plan-label">Résultats et démonstration</span>
+            </li>
+            <li class="plan-item">
+              <span class="plan-marker"></span>
+              <span class="plan-num">09</span>
+              <span class="plan-label">Conclusion</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+<!-- ======================= SLIDE 3 — INTRODUCTION ======================= -->
+<section class="slide" data-title="Introduction">
+  <div class="slide-inner">
+
+    <p class="eyebrow">01 — Introduction</p>
+
+    <h2 class="slide-title">Introduction</h2>
+
+    <div class="grid-2 gap-xl">
+
+      <!-- LEFT -->
+      <div class="stack-list">
+
+        <div class="reveal-item context-row">
+          <div>
+            <h3>Contexte</h3>
+            <p>
+              La <strong>Vision par Ordinateur</strong>  est une branche de l'Intelligence Artificielle qui permet aux machines d'extraire, d'analyser et d'interpréter automatiquement les informations contenues dans les images et les vidéos. L'émergence du Deep Learning, notamment des réseaux de neurones convolutifs (CNN), a profondément transformé ce domaine en améliorant la précision, la robustesse et la capacité des modèles à résoudre des tâches complexes de perception visuelle.
+            </p>
+          </div>
+        </div>
+
+        <div class="reveal-item context-row">
+  <div>
+    <h3>Tâches fondamentales</h3>
+    <p>
+      Les principales tâches de la Vision par Ordinateur comprennent
+      la <strong class="def-trigger" data-def="classification">classification</strong>,
+      la <strong class="def-trigger" data-def="localisation">localisation</strong>,
+      la <strong class="def-trigger" data-def="detection">détection d'objets</strong> et la
+      <strong class="def-trigger" data-def="segmentation">segmentation</strong>,
+      chacune répondant à un niveau différent de compréhension du contenu visuel.
+    </p>
+
+    <div id="def-panel" class="def-panel" style="display:none;">
+      <h4 id="def-title"></h4>
+      <p id="def-text"></p>
+    </div>
+  </div>
+</div>
+
+<style>
+.def-trigger {
+  cursor: pointer;
+  border-bottom: 2px dotted currentColor;
+  transition: color 0.2s ease;
+}
+.def-trigger:hover {
+  color: #3b82f6;
+}
+.def-panel {
+  margin-top: 12px;
+  padding: 14px 18px;
+  background: #f0f4ff;
+  border-left: 4px solid #3b82f6;
+  border-radius: 6px;
+  animation: fadeIn 0.25s ease;
+}
+.def-panel h4 {
+  margin: 0 0 6px;
+  color: #1e40af;
+}
+.def-panel p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<script>
+const definitions = {
+  classification: {
+    title: "Classification",
+    text: "Attribuer une étiquette globale à une image entière, en identifiant la catégorie principale de son contenu (ex : « chat », « voiture »)."
+  },
+  localisation: {
+    title: "Localisation",
+    text: "Identifier où se trouve un objet dans l'image, généralement en traçant une boîte englobante (bounding box) autour de lui."
+  },
+  detection: {
+    title: "Détection d'objets",
+    text: "Repérer et localiser plusieurs objets différents dans une même image, en combinant classification et localisation pour chacun."
+  },
+  segmentation: {
+    title: "Segmentation",
+    text: "Délimiter précisément les contours de chaque objet au niveau du pixel, pour une compréhension fine de la forme et de la position."
+  }
+};
+
+document.querySelectorAll('.def-trigger').forEach(el => {
+  el.addEventListener('click', () => {
+    const key = el.dataset.def;
+    const panel = document.getElementById('def-panel');
+    const title = document.getElementById('def-title');
+    const text = document.getElementById('def-text');
+
+    if (panel.style.display !== 'none' && title.textContent === definitions[key].title) {
+      panel.style.display = 'none';
+      return;
+    }
+
+    title.textContent = definitions[key].title;
+    text.textContent = definitions[key].text;
+    panel.style.display = 'block';
+  });
+});
+</script>
+
+        <div class="reveal-item context-row">
+          <div>
+            <h3>Objectif de cette étude</h3>
+            <p>
+               se concentre sur la
+        <strong>détection d'objets</strong>, plus précisément sur
+        l'évolution de la famille <strong>YOLO</strong>, en analysant
+        les architectures proposées et leur impact sur les performances.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="app-panel reveal-item">
+
+        <h3 class="panel-title">
+          Applications de la vision par ordinateur
+        </h3>
+
+        <div class="app-grid">
+
+          <div class="app-chip">Véhicules autonomes</div>
+          <div class="app-chip">Vidéosurveillance</div>
+          <div class="app-chip">Robotique</div>
+          <div class="app-chip">Industrie</div>
+          <div class="app-chip">Imagerie médicale</div>
+          <div class="app-chip">Agriculture intelligente</div>
+          <div class="app-chip">Smart Cities</div>
+          <div class="app-chip">Analyse sportive</div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ======================= SLIDE 4 — DÉFIS DE LA COMPUTER VISION (SCHÉMA CENTRAL) ======================= -->
+<section class="slide" data-title="Défis de la Computer Vision">
+  <div class="slide-inner">
+    <p class="eyebrow">02 — Contexte &amp; problématique</p>
+    <h2 class="slide-title">Défis de la Computer Vision</h2>
+
+    <div class="challenge-wheel reveal-item">
+
+      <!-- Connexions — lignes droites, du centre vers chaque carte -->
+      <svg class="challenge-links" viewBox="0 0 720 562" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="linkGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0EA5C4" stop-opacity="0.55"/>
+            <stop offset="1" stop-color="#0B2A4A" stop-opacity="0.2"/>
+          </linearGradient>
+        </defs>
+        <line x1="360" y1="271" x2="356" y2="70"  class="challenge-link"/>
+        <line x1="360" y1="271" x2="192" y2="150" class="challenge-link"/>
+        <line x1="360" y1="271" x2="524" y2="150" class="challenge-link"/>
+        <line x1="360" y1="271" x2="196" y2="305" class="challenge-link"/>
+        <line x1="360" y1="271" x2="530" y2="315" class="challenge-link"/>
+        <line x1="360" y1="271" x2="278" y2="435" class="challenge-link"/>
+        <line x1="360" y1="271" x2="442" y2="435" class="challenge-link"/>
+      </svg>
+
+      <!-- Nœud central -->
+      <div class="challenge-hub">
+        <span class="challenge-hub-title">Défis de la<br>Computer Vision</span>
+      </div>
+
+      <!-- 7 nœuds de défis — chaque carte est cliquable dans son ensemble
+           et ouvre le modal avec l'image d'illustration correspondante. -->
+      <button type="button" class="challenge-node" style="--x:49.4%; --y:7.8%"  data-challenge="Occlusions" aria-haspopup="dialog">
+        <h4>Occlusions</h4>
+        <p>Objets partiellement masqués.</p>
+        <span class="challenge-node-hint"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 16l-5-5-9 9"/></svg>Voir l'exemple</span>
+      </button>
+      <button type="button" class="challenge-node" style="--x:21.1%; --y:25.1%" data-challenge="Scènes complexes" aria-haspopup="dialog">
+        <h4>Scènes complexes</h4>
+        <p>Chevauchements, arrière-plans encombrés et forte densité.</p>
+        <span class="challenge-node-hint"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 16l-5-5-9 9"/></svg>Voir l'exemple</span>
+      </button>
+      <button type="button" class="challenge-node" style="--x:75.4%; --y:25.1%" data-challenge="Variations d'échelle" aria-haspopup="dialog">
+        <h4>Variations d'échelle</h4>
+        <p>Objets observés à différentes tailles.</p>
+        <span class="challenge-node-hint"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 16l-5-5-9 9"/></svg>Voir l'exemple</span>
+      </button>
+      <button type="button" class="challenge-node" style="--x:21.0%; --y:54.3%" data-challenge="Petits objets" aria-haspopup="dialog">
+        <h4>Petits objets</h4>
+        <p>Faible résolution.</p>
+        <span class="challenge-node-hint"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 16l-5-5-9 9"/></svg>Voir l'exemple</span>
+      </button>
+      <button type="button" class="challenge-node" style="--x:78.7%; --y:56.4%" data-challenge="Variations de perspective" aria-haspopup="dialog">
+        <h4>Variations de perspective</h4>
+        <p>Différents angles de vue.</p>
+        <span class="challenge-node-hint"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 16l-5-5-9 9"/></svg>Voir l'exemple</span>
+      </button>
+      <button type="button" class="challenge-node" style="--x:36.9%; --y:81.5%" data-challenge="Similarité inter-classe" aria-haspopup="dialog">
+        <h4>Similarité inter-classe</h4>
+        <p>Classes différentes mais visuellement proches.</p>
+        <span class="challenge-node-hint"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 16l-5-5-9 9"/></svg>Voir l'exemple</span>
+      </button>
+      <button type="button" class="challenge-node" style="--x:62.8%; --y:81.5%" data-challenge="Diversité intra-classe" aria-haspopup="dialog">
+        <h4>Diversité intra-classe</h4>
+        <p>Grande variabilité d'une même catégorie.</p>
+        <span class="challenge-node-hint"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 16l-5-5-9 9"/></svg>Voir l'exemple</span>
+      </button>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ======================= SLIDE 4bis — TRANSITION VERS YOLO ======================= -->
+<section class="slide" data-title="Pourquoi YOLO ?">
+  <div class="slide-inner">
+
+    <p class="eyebrow">02 — Contexte &amp; problématique</p>
+    <h2 class="slide-title reveal-item">Pourquoi YOLO ?</h2>
+    <p class="yolo-intro-subtitle reveal-item">Une architecture moderne pour la détection d'objets en temps réel.</p>
+
+    <div class="yolo-intro-grid reveal-stagger">
+
+      <div class="yolo-intro-card">
+        <span class="yolo-intro-card-num">01</span>
+        <h3 class="yolo-intro-card-title">Qu'est-ce que YOLO ?</h3>
+        <p class="yolo-intro-card-text">
+          YOLO (<em>You Only Look Once</em>) est un modèle de Deep Learning dédié à la détection d'objets.
+          Contrairement aux approches classiques, il localise et classe plusieurs objets en une seule
+          passe du réseau de neurones, ce qui le rend particulièrement rapide et efficace.
+        </p>
+      </div>
+
+      <div class="yolo-intro-card">
+        <span class="yolo-intro-card-num">02</span>
+        <h3 class="yolo-intro-card-title">Pourquoi YOLO ?</h3>
+        <p class="yolo-intro-card-text">
+          YOLO a été développé pour répondre à plusieurs Limitations de la Computer Vision traditionnelle :
+          traitements en plusieurs étapes, temps d'exécution élevé, difficulté à fonctionner en temps réel.
+          Son approche unifiée améliore le compromis entre vitesse et précision.
+        </p>
+      </div>
+
+      <div class="yolo-intro-card">
+        <span class="yolo-intro-card-num">03</span>
+        <h3 class="yolo-intro-card-title">Évolution de YOLO</h3>
+        <p class="yolo-intro-card-text">
+          Depuis sa première version, YOLO a connu plusieurs évolutions (YOLOv1 à YOLOv26). Chaque
+          nouvelle version introduit des améliorations de son architecture afin d'augmenter les
+          performances, la précision et la vitesse.
+        </p>
+      </div>
+
+    </div>
+
+
+  </div>
+</section>
+
+
+<!-- ======================= SLIDE 5 — PROBLÉMATIQUE ======================= -->
+<section class="slide" data-title="Problématique">
+  <div class="slide-inner">
+
+    <p class="eyebrow">02 — Contexte &amp; problématique</p>
+    <h2 class="slide-title">Problématique</h2>
+
+    <p class="problem-intro reveal-item">
+      L'évolution rapide de la famille YOLO soulève la nécessité d'une analyse comparative fondée sur des critères d'évaluation homogènes.
+    </p>
+
+    <div class="problem-card reveal-item">
+
+      <p>L'évolution rapide de la famille YOLO, marquée par l'apparition de nombreuses variantes et d'innovations architecturales successives, vise à optimiser le compromis entre précision, vitesse d'inférence et complexité computationnelle. Toutefois, l'hétérogénéité des protocoles expérimentaux, des jeux de données et des métriques d'évaluation limite la comparabilité des performances rapportées. Une analyse comparative fondée sur un cadre d'évaluation homogène s'avère ainsi essentielle pour caractériser objectivement l'évolution des modèles YOLO.</p>
+
+      
+    </div>
+
+    <div class="research-question reveal-item">
+      <span class="rq-label">Question de recherche</span>
+
+      <p>
+        Comment les évolutions architecturales de la famille YOLO influencent-elles les performances en détection d'objets selon un protocole d'évaluation homogène ?
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ======================= SLIDE — CONVOLUTIONAL NEURAL NETWORK (CNN) ======================= -->
+<section class="slide" data-title="Convolutional Neural Network (CNN)">
+  <div class="slide-inner">
+
+    <p class="eyebrow">3-Fondements de la détection d'objets</p>
+
+    <h2 class="slide-title">Convolutional Neural Network (CNN)</h2>
+
+    <div class="reveal-item context-row">
+    <div>
+    <h3>Qu'est-ce qu'un Convolutional Neural Network (CNN) ?</h3>
+    <p>
+      Un <strong>CNN</strong>, ou
+      <strong>réseau de neurones convolutif</strong>, est un modèle de
+      <strong>Deep Learning</strong> spécialement conçu pour analyser automatiquement des images.
+      Il apprend à extraire progressivement des caractéristiques visuelles, telles que les
+      <strong>contours</strong>, les <strong>textures</strong>, les <strong>formes</strong>,
+      puis des représentations plus complexes grâce aux <strong>couches de convolution</strong>.
+      Cette capacité lui permet d'effectuer efficacement des tâches de
+      <strong>classification d'images</strong>, de <strong>détection d'objets</strong>
+      et de <strong>segmentation</strong>, faisant des CNN la base de nombreux systèmes modernes
+      de Vision par Ordinateur, notamment les modèles de la famille <strong>YOLO</strong>.
+    </p>
+  </div>
+</div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ======================= SLIDE — PIPELINE CNN (EXPLORATION INTERACTIVE) ======================= -->
+<section class="slide" data-title="Pipeline CNN — Exploration interactive">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">3-Fondements de la détection d'objets</p>
+    <h2 class="slide-title">Pipeline complet d'un CNN pour la détection d'objets</h2>
+
+    <!-- ============ VUE D'ENSEMBLE — PIPELINE HORIZONTAL ============ -->
+    <div class="cnn-overview cnn-overview-h reveal-item">
+      <div class="ov-node"><span>Input</span></div>
+      <div class="cnn-connector cnn-connector-h" aria-hidden="true"><div class="cline"></div></div>
+      <div class="ov-node ov-explorable" data-target="backbone"><span>Backbone</span></div>
+      <div class="cnn-connector cnn-connector-h" aria-hidden="true"><div class="cline"></div></div>
+      <div class="ov-node ov-explorable" data-target="neck"><span>Neck</span></div>
+      <div class="cnn-connector cnn-connector-h" aria-hidden="true"><div class="cline"></div></div>
+      <div class="ov-node ov-explorable" data-target="head"><span>Head</span></div>
+      <div class="cnn-connector cnn-connector-h" aria-hidden="true"><div class="cline"></div></div>
+      <div class="ov-node ov-explorable" data-target="output"><span>Output</span></div>
+    </div>
+
+    <!-- ============ 4 CARTES INTERACTIVES ============ -->
+    <div class="cnn-card-grid reveal-stagger">
+
+      <button type="button" class="cnn-card" data-target="backbone" aria-expanded="false">
+        <span class="cnn-card-num">01</span>
+                <h4>Backbone</h4>
+        <p>Extraction des caractéristiques</p>
+        <span class="cnn-card-hint">Explorer</span>
+      </button>
+
+      <button type="button" class="cnn-card" data-target="neck" aria-expanded="false">
+        <span class="cnn-card-num">02</span>
+                <h4>Neck</h4>
+        <p>Fusion multi-échelle</p>
+        <span class="cnn-card-hint">Explorer</span>
+      </button>
+
+      <button type="button" class="cnn-card" data-target="head" aria-expanded="false">
+        <span class="cnn-card-num">03</span>
+                <h4>Head</h4>
+        <p>Prédiction</p>
+        <span class="cnn-card-hint">Explorer</span>
+      </button>
+
+      <button type="button" class="cnn-card" data-target="output" aria-expanded="false">
+        <span class="cnn-card-num">04</span>
+                <h4>Output</h4>
+        <p>Détection finale</p>
+        <span class="cnn-card-hint">Explorer</span>
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- ============ PANNEAU LATÉRAL DE DÉTAIL (drawer) ============ -->
+  <div class="cnn-panel-scrim" id="cnnPanelScrim"></div>
+  <aside class="cnn-side-panel" id="cnnSidePanel" role="dialog" aria-modal="true" aria-labelledby="cnnPanelTitle">
+
+    <div class="cnn-panel-header">
+      <span class="cnn-panel-step" id="cnnPanelStep">01</span>
+      <div class="cnn-panel-head-text">
+        <span class="cnn-panel-eyebrow" id="cnnPanelEyebrow">Backbone</span>
+        <h3 id="cnnPanelTitle">Extraction hiérarchique des caractéristiques</h3>
+      </div>
+      <button class="cnn-panel-close text-btn" id="cnnPanelClose" aria-label="Fermer le panneau">
+        Fermer
+      </button>
+    </div>
+
+    <div class="cnn-panel-body">
+
+      <!-- ---------- CONTENU : BACKBONE ---------- -->
+      <div class="cnn-panel-content" data-content="backbone">
+
+        <div class="cnn-input-row" style="justify-content:flex-start; margin-bottom:8px;">
+          <div class="cnn-rgb-stack" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="cnn-input-label">
+            <h4>Image d'entrée — Input</h4>
+            <p>Image RGB brute : matrice de pixels à trois canaux (Rouge / Vert / Bleu), redimensionnée en <span class="mono-tag">640 × 640 × 3</span> avant d'être injectée dans le réseau.</p>
+          </div>
+        </div>
+
+        <div class="backbone-panel" style="margin-top:18px;">
+          <p class="soft-note" style="display:block; font-size:11.5px; margin-bottom:10px;">Cliquez sur une couche (Conv, BN, SiLU, Pool, Résiduel) pour afficher sa relation mathématique et son rôle.</p>
+          <div class="backbone-track">
+            <div class="conv-block" style="--n:1">
+              <div class="cb-box"></div>
+              <div class="cb-label">Conv Block 1</div>
+              <div class="cb-tags">
+                <button type="button" class="cb-tag" data-layer="conv">Conv</button>
+               
+              </div>
+            </div>
+            <div class="cb-arrow"></div>
+
+            <div class="conv-block" style="--n:2">
+              <div class="cb-box"></div>
+              <div class="cb-label">Conv Block 2</div>
+              <div class="cb-tags">
+                <button type="button" class="cb-tag" data-layer="bn">BN</button>
+                
+              </div>
+            </div>
+            <div class="cb-arrow"></div>
+
+            <div class="conv-block" style="--n:3">
+              <div class="cb-box"></div>
+              <div class="cb-label">Conv Block 3</div>
+              <div class="cb-tags">
+                
+                <button type="button" class="cb-tag" data-layer="silu">SiLU</button>
+              </div>
+            </div>
+            <div class="cb-arrow"></div>
+
+            <div class="conv-block" style="--n:4.2">
+              <div class="cb-box"></div>
+              <div class="cb-label">Conv Block N</div>
+              <div class="cb-tags">
+                
+                <button type="button" class="cb-tag" data-layer="pool">Pool</button>
+                <button type="button" class="cb-tag" data-layer="residual">Résiduel </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ---- Fiche explicative de la couche cliquée ---- -->
+          <div class="layer-detail" id="layerDetail">
+            <div class="layer-detail-empty" id="layerDetailEmpty">
+              
+            </div>
+            <div class="layer-detail-card" id="layerDetailCard">
+              <span class="ld-label" id="ldLabel">Convolution</span>
+              <div class="ld-formula" id="ldFormula"></div>
+              <p class="ld-role" id="ldRole"></p>
+            </div>
+          </div>
+
+          <div class="backbone-legend">
+            <div class="bl-item"><span>Résolution spatiale ↓</span><div class="bl-bar res"><span></span></div></div>
+            <div class="bl-item"><span>Nombre de canaux ↑</span><div class="bl-bar chan"><span></span></div></div>
+          </div>
+
+          <div class="feature-strip" aria-hidden="true">
+            <div class="feat-node"><span>Bords</span></div>
+            <div class="feat-node"><span>Coins</span></div>
+            <div class="feat-node"><span>Textures</span></div>
+            <div class="feat-node"><span>Motifs</span></div>
+            <div class="feat-node"><span>Formes</span></div>
+            <div class="feat-node"><span>Parties d'objets</span></div>
+            <div class="feat-node"><span>Sémantique</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ---------- CONTENU : NECK ---------- -->
+      <div class="cnn-panel-content" data-content="neck">
+
+        <div class="neck-panel">
+          <svg class="neck-svg" viewBox="0 0 1120 300" aria-hidden="true">
+            <defs>
+              <linearGradient id="neckFusionGrad2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#17C4DE"/><stop offset="1" stop-color="#0B2A4A"/>
+              </linearGradient>
+            </defs>
+
+            <text x="560" y="12" class="neck-sub" style="font-weight:600;">Top-Down — UpSampling (information sémantique)</text>
+            <text x="560" y="296" class="neck-sub" style="font-weight:600;">Bottom-Up — DownSampling (information spatiale, PAN)</text>
+
+            <path d="M110,64 L110,110" class="neck-line vert"/>
+            <path d="M335,64 L335,110" class="neck-line vert"/>
+            <path d="M560,64 L560,110" class="neck-line vert"/>
+            <path d="M785,64 L785,110" class="neck-line vert"/>
+            <path d="M1010,64 L1010,110" class="neck-line vert"/>
+            <path d="M110,144 L110,190" class="neck-line vert"/>
+            <path d="M335,144 L335,190" class="neck-line vert"/>
+            <path d="M560,144 L560,190" class="neck-line vert"/>
+            <path d="M785,144 L785,190" class="neck-line vert"/>
+            <path d="M1010,144 L1010,190" class="neck-line vert"/>
+
+            <path d="M925,42 L870,42" class="neck-line up"/>
+            <path d="M700,42 L645,42" class="neck-line up"/>
+            <path d="M475,42 L420,42" class="neck-line up"/>
+            <path d="M250,42 L195,42" class="neck-line up"/>
+            <polygon points="195,42 205,37 205,47" fill="var(--cyan-500)"/>
+            <polygon points="420,42 430,37 430,47" fill="var(--cyan-500)"/>
+            <polygon points="645,42 655,37 655,47" fill="var(--cyan-500)"/>
+            <polygon points="870,42 880,37 880,47" fill="var(--cyan-500)"/>
+
+            <path d="M195,212 L250,212" class="neck-line down"/>
+            <path d="M420,212 L475,212" class="neck-line down"/>
+            <path d="M645,212 L700,212" class="neck-line down"/>
+            <path d="M870,212 L925,212" class="neck-line down"/>
+            <polygon points="250,212 240,207 240,217" fill="var(--navy-700)"/>
+            <polygon points="475,212 465,207 465,217" fill="var(--navy-700)"/>
+            <polygon points="700,212 690,207 690,217" fill="var(--navy-700)"/>
+            <polygon points="925,212 915,207 915,217" fill="var(--navy-700)"/>
+
+            <g>
+              <rect x="25"  y="20" width="170" height="44" rx="9" class="neck-box-top"/>
+              <rect x="250" y="20" width="170" height="44" rx="9" class="neck-box-top"/>
+              <rect x="475" y="20" width="170" height="44" rx="9" class="neck-box-top"/>
+              <rect x="700" y="20" width="170" height="44" rx="9" class="neck-box-top"/>
+              <rect x="925" y="20" width="170" height="44" rx="9" class="neck-box-top"/>
+              <text x="110"  y="38" class="neck-label-dark">P3</text><text x="110"  y="54" class="neck-sub">160×160</text>
+              <text x="335"  y="38" class="neck-label-dark">P4</text><text x="335"  y="54" class="neck-sub">80×80</text>
+              <text x="560"  y="38" class="neck-label-dark">P5</text><text x="560"  y="54" class="neck-sub">40×40</text>
+              <text x="785"  y="38" class="neck-label-dark">P6</text><text x="785"  y="54" class="neck-sub">20×20</text>
+              <text x="1010" y="38" class="neck-label-dark">P7</text><text x="1010" y="54" class="neck-sub">10×10</text>
+            </g>
+
+            <circle cx="110"  cy="127" r="17" class="neck-fusion-circle"/>
+            <circle cx="335"  cy="127" r="17" class="neck-fusion-circle"/>
+            <circle cx="560"  cy="127" r="17" class="neck-fusion-circle"/>
+            <circle cx="785"  cy="127" r="17" class="neck-fusion-circle"/>
+            <circle cx="1010" cy="127" r="17" class="neck-fusion-circle"/>
+            <text x="110"  y="133" class="neck-plus">+</text>
+            <text x="335"  y="133" class="neck-plus">+</text>
+            <text x="560"  y="133" class="neck-plus">+</text>
+            <text x="785"  y="133" class="neck-plus">+</text>
+            <text x="1010" y="133" class="neck-plus">+</text>
+
+            <g>
+              <rect x="25"  y="190" width="170" height="44" rx="9" class="neck-box-bottom"/>
+              <rect x="250" y="190" width="170" height="44" rx="9" class="neck-box-bottom"/>
+              <rect x="475" y="190" width="170" height="44" rx="9" class="neck-box-bottom"/>
+              <rect x="700" y="190" width="170" height="44" rx="9" class="neck-box-bottom"/>
+              <rect x="925" y="190" width="170" height="44" rx="9" class="neck-box-bottom"/>
+              <text x="110"  y="208" class="neck-label-light">P3</text><text x="110"  y="224" class="neck-sub-light">Concaténation</text>
+              <text x="335"  y="208" class="neck-label-light">P4</text><text x="335"  y="224" class="neck-sub-light">Concaténation</text>
+              <text x="560"  y="208" class="neck-label-light">P5</text><text x="560"  y="224" class="neck-sub-light">Concaténation</text>
+              <text x="785"  y="208" class="neck-label-light">P6</text><text x="785"  y="224" class="neck-sub-light">Concaténation</text>
+              <text x="1010" y="208" class="neck-label-light">P7</text><text x="1010" y="224" class="neck-sub-light">Concaténation</text>
+            </g>
+          </svg>
+
+          <div class="neck-caption-row">
+            <button type="button" class="ncap ncap-btn" data-info="topdown"><i class="cyan"></i>Chemin top-down (FPN)</button>
+            <button type="button" class="ncap ncap-btn" data-info="bottomup"><i class="navy"></i>Chemin bottom-up (PAN)</button>
+            <span class="ncap"><i class="grad"></i>Fusion multi-échelle</span>
+          </div>
+
+          <!-- ---- Fiche explicative FPN / PAN ---- -->
+          <div class="concept-detail" id="neckDetail">
+            <div class="concept-detail-empty">
+              
+            </div>
+            <div class="concept-detail-card">
+              <h4 id="neckDetailTitle"></h4>
+              <div class="cd-row"><span class="cd-tag">Définition</span><p id="neckDetailDef"></p></div>
+              <div class="cd-row"><span class="cd-tag">À quoi ça sert ?</span><p id="neckDetailUsage"></p></div>
+              <div class="cd-formula-box">
+                <span class="cd-tag">Relation mathématique</span>
+                <div class="cd-formula" id="neckDetailFormula"></div>
+                <p class="cd-formula-note" id="neckDetailNote"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ---------- CONTENU : HEAD ---------- -->
+      <div class="cnn-panel-content" data-content="head">
+
+        <div class="head-grid">
+
+          <div class="head-card head-card-clickable" data-info="bbox" role="button" tabindex="0">
+                        <h4>Bounding Boxes</h4>
+            <p>Régression des coordonnées de la boîte englobante pour chaque objet détecté.</p>
+            <div class="bbox-mock" aria-hidden="true">
+              <svg viewBox="0 0 220 100">
+                <rect x="55" y="18" width="110" height="64" rx="4" fill="none" stroke="#0EA5C4" stroke-width="2.5" stroke-dasharray="5 4"/>
+                <circle cx="55" cy="18" r="3.5" fill="#0B2A4A"/>
+                <line x1="10" y1="18" x2="55" y2="18" stroke="#8496AC" stroke-width="1.2" stroke-dasharray="2 2"/>
+                <line x1="55" y1="6" x2="55" y2="18" stroke="#8496AC" stroke-width="1.2" stroke-dasharray="2 2"/>
+                <text x="30" y="12" class="scheme-text-sm">x, y</text>
+                <line x1="55" y1="90" x2="165" y2="90" stroke="#8496AC" stroke-width="1.2"/>
+                <text x="110" y="99" class="scheme-text-sm">w</text>
+                <line x1="180" y1="18" x2="180" y2="82" stroke="#8496AC" stroke-width="1.2"/>
+                <text x="192" y="53" class="scheme-text-sm">h</text>
+              </svg>
+            </div>
+            <span class="bbox-tag">(x, y, w, h)</span>
+          </div>
+
+          <div class="head-card head-card-clickable" data-info="confidence" role="button" tabindex="0">
+                        <h4>Objectness Score</h4>
+            <p>Probabilité de présence d'un objet à l'intérieur de la boîte proposée.</p>
+            <div class="gauge-wrap" aria-hidden="true">
+              <svg viewBox="0 0 120 68">
+                <defs>
+                  <linearGradient id="gaugeGrad2" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#0EA5C4"/><stop offset="1" stop-color="#0B2A4A"/>
+                  </linearGradient>
+                </defs>
+                <path d="M10,60 A50,50 0 0 1 110,60" class="gauge-arc-bg"/>
+                <path d="M10,60 A50,50 0 0 1 110,60" class="gauge-arc-fg" style="stroke:url(#gaugeGrad2);"/>
+                <text x="60" y="52" class="gauge-value">0.94</text>
+              </svg>
+            </div>
+            <div class="gauge-scale"><span>0</span><span>1</span></div>
+          </div>
+
+          <div class="head-card head-card-clickable" data-info="class" role="button" tabindex="0">
+                        <h4>Classification</h4>
+            <p>Distribution de probabilités sur l'ensemble des classes connues.</p>
+            <div class="class-chip-list">
+              <div class="class-chip"><span>Person</span><div class="cbar-track"><div class="cbar-fill" style="width:92%"></div></div><span class="cval">92%</span></div>
+              <div class="class-chip"><span>Car</span><div class="cbar-track"><div class="cbar-fill" style="width:87%"></div></div><span class="cval">87%</span></div>
+              <div class="class-chip"><span>Bus</span><div class="cbar-track"><div class="cbar-fill" style="width:74%"></div></div><span class="cval">74%</span></div>
+              <div class="class-chip"><span>Bicycle</span><div class="cbar-track"><div class="cbar-fill" style="width:63%"></div></div><span class="cval">63%</span></div>
+              <div class="class-chip"><span>Traffic Light</span><div class="cbar-track"><div class="cbar-fill" style="width:58%"></div></div><span class="cval">58%</span></div>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="soft-note" style="display:block; font-size:11.5px; margin-top:12px;">Cliquez sur une carte (Bounding Boxes, Objectness Score, Classification) pour voir sa définition, son rôle et sa relation mathématique.</p>
+
+        <!-- ---- Fiche explicative Bounding Box / Confidence / Classe ---- -->
+        <div class="concept-detail" id="headDetail">
+          <div class="concept-detail-empty">
+            
+            <span>Sélectionnez une carte ci-dessus pour afficher son détail.</span>
+          </div>
+          <div class="concept-detail-card">
+            <h4 id="headDetailTitle"></h4>
+            <div class="cd-row"><span class="cd-tag">Définition</span><p id="headDetailDef"></p></div>
+            <div class="cd-row"><span class="cd-tag">À quoi ça sert ?</span><p id="headDetailUsage"></p></div>
+            <div class="cd-formula-box">
+              <span class="cd-tag">Relation mathématique</span>
+              <div class="cd-formula" id="headDetailFormula"></div>
+              <p class="cd-formula-note" id="headDetailNote"></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ---------- CONTENU : OUTPUT ---------- -->
+      <div class="cnn-panel-content" data-content="output">
+
+        <div class="detection-row" style="grid-template-columns: 1fr;">
+          <div class="detection-frame" aria-hidden="true">
+            <div class="det-box" style="left:8%; top:38%; width:20%; height:48%; border-color:#0EA5C4;"><span class="det-tag" style="background:#0EA5C4;">Person 0.94</span></div>
+            <div class="det-box" style="left:32%; top:52%; width:34%; height:34%; border-color:#0B2A4A;"><span class="det-tag" style="background:#0B2A4A;">Car 0.89</span></div>
+            <div class="det-box" style="left:68%; top:20%; width:26%; height:56%; border-color:#E0654A;"><span class="det-tag" style="background:#E0654A;">Bus 0.81</span></div>
+            <div class="det-box" style="left:50%; top:14%; width:12%; height:20%; border-color:#2FA84F;"><span class="det-tag" style="background:#2FA84F;">Bicycle 0.72</span></div>
+          </div>
+          <div class="detection-legend" style="flex-direction:row; flex-wrap:wrap; gap:16px; margin-top:14px;">
+            <div class="dl-item"><span class="dl-swatch" style="background:#0EA5C4;"></span>Person</div>
+            <div class="dl-item"><span class="dl-swatch" style="background:#0B2A4A;"></span>Car</div>
+            <div class="dl-item"><span class="dl-swatch" style="background:#E0654A;"></span>Bus</div>
+            <div class="dl-item"><span class="dl-swatch" style="background:#2FA84F;"></span>Bicycle</div>
+          </div>
+        </div>
+
+        <div class="nms-note">
+          <span class="nms-note-label">Non-Maximum Suppression (NMS)</span>
+          <p>Le NMS élimine les boîtes redondantes et ne conserve, pour chaque objet, que la détection possédant le score de confiance le plus élevé.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </aside>
+
+</section>
+
+<section class="slide" data-title="Pre-trained Model">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">3-Fondements de la détection d'objets</p>
+    <h2 class="slide-title">Modèle pré-entraîné</h2>
+
+    <!-- ======================= DÉFINITION ÉPURÉE ======================= -->
+    <p class="pt-definition reveal-item">
+      Un <strong>modèle pré-entraîné</strong> est un modèle de Deep Learning déjà entraîné sur un grand jeu de
+      données afin de réutiliser les connaissances acquises dans une nouvelle tâche
+      (<button type="button" class="pt-term" data-pt-panel="weights" aria-haspopup="dialog">weights, poids appris</button>).
+    </p>
+
+    <!-- ======================= SCHÉMA 1 — PIPELINE CLIQUABLE ======================= -->
+    <p class="eyebrow" style="margin-top:26px;">Principe de fonctionnement</p>
+
+    <div class="cnn-overview cnn-overview-h reveal-item">
+
+      <div class="ov-node pt-explorable" data-pt-panel="dataset" role="button" tabindex="0">
+        <span>Dataset</span>
+      </div>
+
+      <div class="cnn-connector cnn-connector-h" aria-hidden="true"><div class="cline"></div></div>
+
+      <div class="ov-node pt-explorable" data-pt-panel="training" role="button" tabindex="0">
+        <span>Entraînement</span>
+      </div>
+
+      <div class="cnn-connector cnn-connector-h" aria-hidden="true"><div class="cline"></div></div>
+
+      <div class="ov-node pt-explorable is-active" data-pt-panel="pretrained" role="button" tabindex="0">
+        <span>Modèle pré-entraîné</span>
+      </div>
+
+      <div class="cnn-connector cnn-connector-h" aria-hidden="true"><div class="cline"></div></div>
+
+      <div class="ov-node pt-explorable" data-pt-panel="transfer" role="button" tabindex="0">
+        <span>Transfer Learning</span>
+      </div>
+
+      <div class="cnn-connector cnn-connector-h" aria-hidden="true"><div class="cline"></div></div>
+
+      <div class="ov-node pt-explorable is-active" data-pt-panel="newtask" role="button" tabindex="0">
+        <span>Nouvelle tâche</span>
+      </div>
+
+    </div>
+
+    <!-- ======================= SCHÉMA 2 — ARCHITECTURE (Backbone / Neck / Head) ======================= -->
+    <p class="eyebrow bnh-eyebrow" style="margin-top:30px;">Architecture</p>
+
+    <div class="cnn-overview cnn-overview-h bnh-scheme reveal-item" id="bnhSchema">
+
+      <div class="ov-node ov-explorable" data-bnh="input" role="button" tabindex="0">
+        <span>Image d'entrée</span>
+      </div>
+
+      <div class="cnn-connector cnn-connector-h" aria-hidden="true"><div class="cline"></div></div>
+
+      <div class="ov-node ov-explorable" data-bnh="backbone" role="button" tabindex="0">
+        <span>Backbone</span>
+      </div>
+
+      <div class="cnn-connector cnn-connector-h" aria-hidden="true"><div class="cline"></div></div>
+
+      <div class="ov-node ov-explorable" data-bnh="neck" role="button" tabindex="0">
+        <span>Neck</span>
+      </div>
+
+      <div class="cnn-connector cnn-connector-h" aria-hidden="true"><div class="cline"></div></div>
+
+      <div class="ov-node ov-explorable" data-bnh="head" role="button" tabindex="0">
+        <span>Head</span>
+      </div>
+
+      <div class="cnn-connector cnn-connector-h" aria-hidden="true"><div class="cline"></div></div>
+
+      <div class="ov-node ov-explorable" data-bnh="output" role="button" tabindex="0">
+        <span>Détection finale</span>
+      </div>
+
+    </div>
+
+    <!-- ======================= PANNEAU DE DÉTAIL (fondu) — rien affiché tant qu'on n'a pas cliqué ======================= -->
+    <div class="bnh-panel-zone reveal-item">
+      <div class="bnh-panel" data-bnh-content="input">
+        <span class="bnh-panel-eyebrow">Image d'entrée</span>
+        <p class="bnh-role-label">Rôle</p>
+        <p>Image fournie au réseau neuronal. Elle constitue les données brutes qui seront analysées afin d'effectuer la détection des objets.</p>
+      </div>
+
+      <div class="bnh-panel" data-bnh-content="backbone">
+        <span class="bnh-panel-eyebrow">Backbone</span>
+        <p class="bnh-role-label">Rôle</p>
+        <p>Extraction des caractéristiques (features) de l'image à différents niveaux afin de représenter les formes, textures et objets.</p>
+        <p class="bnh-role-label">Exemples</p>
+        <div class="bnh-chip-row">
+          <span class="bnh-chip">AlexNet</span>
+          <span class="bnh-chip">VGG</span>
+          <span class="bnh-chip">ResNet</span>
+          <span class="bnh-chip">ResNeXt</span>
+          <span class="bnh-chip">ConvNeXt</span>
+          <span class="bnh-chip">Vision Transformer (ViT)</span>
+          <span class="bnh-chip">DeiT</span>
+        </div>
+      </div>
+
+      <div class="bnh-panel" data-bnh-content="neck">
+        <span class="bnh-panel-eyebrow">Neck</span>
+        <p class="bnh-role-label">Rôle</p>
+        <p>Fusion des caractéristiques provenant de différentes résolutions afin d'améliorer la détection des objets de tailles variées.</p>
+        <p class="bnh-role-label">Exemples</p>
+        <div class="bnh-chip-row">
+          <span class="bnh-chip">FPN</span>
+          <span class="bnh-chip">PANet</span>
+          <span class="bnh-chip">BiFPN</span>
+          <span class="bnh-chip">CSP-PAN</span>
+        </div>
+      </div>
+
+      <div class="bnh-panel" data-bnh-content="head">
+        <span class="bnh-panel-eyebrow">Head</span>
+        <p class="bnh-role-label">Rôle</p>
+        <p>Produire les prédictions finales. Le Head estime la classe de l'objet, la Bounding Box et le Confidence Score.</p>
+        <p class="bnh-role-label">Exemples</p>
+        <div class="bnh-chip-row">
+          <span class="bnh-chip">YOLO Head</span>
+          <span class="bnh-chip">SSD Head</span>
+          <span class="bnh-chip">RetinaNet Head</span>
+          <span class="bnh-chip">FCOS Head</span>
+          <span class="bnh-chip">Faster R-CNN Head</span>
+        </div>
+      </div>
+
+      <div class="bnh-panel" data-bnh-content="output">
+        <span class="bnh-panel-eyebrow">Détection finale</span>
+        <p class="bnh-role-label">Sorties</p>
+        <div class="bnh-chip-row">
+          <span class="bnh-chip">Classe</span>
+          <span class="bnh-chip">Bounding Box</span>
+          <span class="bnh-chip">Confidence Score</span>
+        </div>
+        <p style="margin-top:12px;">Ces trois informations constituent le résultat final de la détection produit par le modèle.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ======================= PANNEAU FLOTTANT — DÉTAILS PROGRESSIFS ======================= -->
+  <div class="pt-modal-overlay" id="ptModalOverlay">
+    <div class="pt-modal" role="dialog" aria-modal="true" aria-labelledby="ptModalTitle">
+      <button type="button" class="pt-modal-close" id="ptModalClose">Fermer</button>
+      <span class="pt-modal-eyebrow" id="ptModalEyebrow">Concept clé</span>
+      <h3 id="ptModalTitle">Titre</h3>
+      <div class="pt-modal-content" id="ptModalContent"></div>
+    </div>
+  </div>
+
+</section>
+
+
+
+<script>
+ 
+  (function () {
+    var schema = document.getElementById('bnhSchema');
+    if (!schema) return;
+    var slide = schema.closest('');
+    var nodes = schema.querySelectorAll('[data-bnh]');
+    var panels = slide.querySelectorAll('[data-bnh-content]');
+    var empty = document.getElementById('bnhPanelEmpty');
+
+    nodes.forEach(function (node) {
+      node.addEventListener('click', function () { activate(node.getAttribute('data-bnh')); });
+      node.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(node.getAttribute('data-bnh')); }
+      });
+    });
+
+    function activate(key) {
+      nodes.forEach(function (n) { n.classList.toggle('is-active', n.getAttribute('data-bnh') === key); });
+      panels.forEach(function (p) { p.classList.toggle('is-visible', p.getAttribute('data-bnh-content') === key); });
+      if (empty) empty.style.display = 'none';
+    }
+  })();
+</script>
+
+
+
+
+
+<!-- ============================================================================
+     ========================================================================= -->
+<section class="slide" data-title="Pourquoi un modèle pré-entraîné">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">01 — Fondements</p>
+    <h2 class="slide-title reveal-item">
+      Pourquoi un modèle pré-entraîné ?
+    </h2>
+
+    <div class="pt-utility reveal-item">
+
+      <svg class="pt-utility-lines"
+           viewBox="0 0 100 100"
+           preserveAspectRatio="none"
+           aria-hidden="true">
+
+        <line class="pt-link" x1="50" y1="50" x2="20" y2="18"></line>
+        <line class="pt-link" x1="50" y1="50" x2="80" y2="18"></line>
+
+        <line class="pt-link" x1="50" y1="50" x2="12" y2="50"></line>
+        <line class="pt-link" x1="50" y1="50" x2="88" y2="50"></line>
+
+        <line class="pt-link" x1="50" y1="50" x2="20" y2="82"></line>
+        <line class="pt-link" x1="50" y1="50" x2="80" y2="82"></line>
+
+      </svg>
+
+      <!-- Centre -->
+
+      <div class="pt-hub-center">
+        <span>Modèle<br>pré-entraîné</span>
+      </div>
+
+      <!-- Temps -->
+
+      <button class="pt-hub-node pt-tip-below"
+              style="left:20%; top:18%;">
+        <span class="pt-hub-dot"></span>
+        <span class="pt-hub-label">
+          Réduction du temps d'entraînement
+        </span>
+        <span class="pt-tooltip">
+          Les connaissances sont déjà apprises.
+        </span>
+      </button>
+
+      <!-- Précision -->
+
+      <button class="pt-hub-node pt-tip-below"
+              style="left:80%; top:18%;">
+        <span class="pt-hub-dot"></span>
+        <span class="pt-hub-label">
+          Meilleure précision
+        </span>
+        <span class="pt-tooltip">
+          Les caractéristiques visuelles sont déjà extraites.
+        </span>
+      </button>
+
+      <!-- Données -->
+
+      <button class="pt-hub-node pt-tip-below"
+              style="left:12%; top:50%;">
+        <span class="pt-hub-dot"></span>
+        <span class="pt-hub-label">
+          Moins de données nécessaires
+        </span>
+        <span class="pt-tooltip">
+          Quelques centaines d'images peuvent suffire.
+        </span>
+      </button>
+
+      <!-- Convergence -->
+
+      <button class="pt-hub-node pt-tip-below"
+              style="left:88%; top:50%;">
+        <span class="pt-hub-dot"></span>
+        <span class="pt-hub-label">
+          Convergence plus rapide
+        </span>
+        <span class="pt-tooltip">
+          Atteint de bonnes performances en moins d'époques.
+        </span>
+      </button>
+
+      <!-- Généralisation -->
+
+      <button class="pt-hub-node pt-tip-above"
+              style="left:20%; top:82%;">
+        <span class="pt-hub-dot"></span>
+        <span class="pt-hub-label">
+          Meilleure généralisation
+        </span>
+        <span class="pt-tooltip">
+          Plus robuste face à de nouvelles images.
+        </span>
+      </button>
+
+      <!-- Transfer Learning -->
+
+      <button class="pt-hub-node pt-tip-above"
+              style="left:80%; top:82%;">
+        <span class="pt-hub-dot"></span>
+        <span class="pt-hub-label">
+          Facilite le Transfer Learning
+        </span>
+        <span class="pt-tooltip">
+          Réutilisation efficace des poids du modèle.
+        </span>
+      </button>
+
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+  /* ============================================================================
+     JS — Slide "Architecture générale d'un modèle pré-entraîné"
+     Scopé au schéma #bnhSchema pour n'affecter aucune autre slide.
+     ========================================================================= */
+  (function () {
+    var schema = document.getElementById('bnhSchema');
+    if (!schema) return;
+    var slide = schema.closest('.slide');
+    var nodes = schema.querySelectorAll('[data-bnh]');
+    var panels = slide.querySelectorAll('[data-bnh-content]');
+
+    nodes.forEach(function (node) {
+      node.addEventListener('click', function () { activate(node.getAttribute('data-bnh')); });
+      node.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(node.getAttribute('data-bnh')); }
+      });
+    });
+
+    function activate(key) {
+      nodes.forEach(function (n) { n.classList.toggle('is-active', n.getAttribute('data-bnh') === key); });
+      panels.forEach(function (p) { p.classList.toggle('is-visible', p.getAttribute('data-bnh-content') === key); });
+    }
+  })();
+</script>
+
+
+
+
+
+
+
+
+<!-- ======================= SLIDE — (One Stage)- stage  ======================= -->
+<section class="slide" data-title="stage">
+  <div class="slide-inner">
+
+<p class="eyebrow">3-Fondements de la détection d'objets</p>
+
+<h2 class="slide-title">Two-Stage vs One-Stage</h2>
+
+<div class="reveal-item context-row cnn-onestage-row">
+
+  <div class="cnn-onestage-col">
+    <h3>Qu'est-ce que la détection Two-Stage ?</h3>
+    <p>
+      
+     Les détecteurs <strong>Two-Stage</strong> décomposent la détection d'objets en deux phases successives :
+      (1) la génération de propositions de régions candidates (Region Proposals), 
+      puis (2) leur classification et la régression des boîtes englobantes. 
+      Cette séparation explicite entre localisation et classification permet d'obtenir une précision élevée,
+       notamment pour les objets de petite taille ou dans les scènes complexes, au prix d'un coût computationnel et d'une latence d'inférence plus importants.
+    </p>
+  </div>
+
+  <div class="cnn-onestage-col">
+    <h3>Qu'est-ce que la détection One-Stage ?</h3>
+    <p>
+      Les détecteurs <strong>One-Stage</strong> réalisent la détection d'objets via un processus de régression dense de bout en bout, où la localisation, la classification et l'estimation de confiance sont effectuées conjointement en une unique passe avant du réseau. En supprimant l'étape intermédiaire de génération de propositions de régions, ces modèles réduisent significativement le coût computationnel et la latence, tout en maintenant des performances élevées, ce qui explique leur adoption généralisée dans les systèmes de vision par ordinateur temps réel, notamment au sein de la famille YOLO.
+    </p>
+  </div>
+
+</div>
+</div>
+
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+<!-- ======================= SLIDE — Two-Stage vs One-Stage Detection ======================= -->
+<section class="slide" data-title="Two-Stage vs One-Stage Detection">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">Fondements de la détection d'objets</p>
+    <h2 class="slide-title">Two-Stage Detection vs One-Stage Detection (YOLO)</h2>
+
+    <!-- Sprite SVG interne : scène de rue réutilisée + petites icônes -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <symbol id="tsdScene" viewBox="0 0 300 170">
+          <rect x="0" y="0" width="300" height="115" fill="#EAF1FA"/>
+          <rect x="0" y="105" width="300" height="65" fill="#D7DEE6"/>
+          <rect x="0" y="118" width="300" height="4" fill="#C3CCD8"/>
+          <g fill="#C7D2DE">
+            <rect x="4" y="52" width="26" height="60"/><rect x="34" y="38" width="22" height="74"/>
+            <rect x="60" y="60" width="20" height="52"/><rect x="222" y="46" width="24" height="66"/>
+            <rect x="250" y="58" width="20" height="54"/><rect x="274" y="34" width="24" height="78"/>
+          </g>
+          <g fill="#7FB88A">
+            <circle cx="70" cy="60" r="12"/><rect x="67" y="60" width="6" height="24"/>
+            <circle cx="200" cy="55" r="10"/><rect x="197" y="55" width="6" height="26"/>
+          </g>
+          <!-- piéton (gauche, proche) -->
+          <g stroke="#3A4657" stroke-width="4" stroke-linecap="round" fill="none">
+            <circle cx="33" cy="70" r="8" fill="#3A4657" stroke="none"/>
+            <path d="M33 78v28M33 90l-11 14M33 90l12 12M33 106l-9 22M33 106l10 22"/>
+          </g>
+          <!-- voiture (centre) -->
+          <g>
+            <rect x="100" y="118" width="90" height="26" rx="6" fill="#5B6472"/>
+            <rect x="112" y="104" width="52" height="20" rx="5" fill="#5B6472"/>
+            <rect x="118" y="108" width="18" height="12" rx="2" fill="#CDE3F5"/>
+            <rect x="140" y="108" width="18" height="12" rx="2" fill="#CDE3F5"/>
+            <circle cx="118" cy="146" r="9" fill="#22262E"/><circle cx="172" cy="146" r="9" fill="#22262E"/>
+          </g>
+          <!-- cycliste (droite) -->
+          <g stroke="#3A4657" stroke-width="3.4" fill="none" stroke-linecap="round">
+            <circle cx="234" cy="128" r="11"/><circle cx="266" cy="128" r="11"/>
+            <path d="M234 128l16-26h14M250 102l16 26M234 128h20"/>
+            <circle cx="248" cy="92" r="7" fill="#3A4657" stroke="none"/>
+            <path d="M248 99v12"/>
+          </g>
+        </symbol>
+
+        <symbol id="tsdIconTarget" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></symbol>
+        <symbol id="tsdIconHourglass" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M7 3c0 5 5 6 5 9s-5 4-5 9M17 3c0 5-5 6-5 9s5 4 5 9"/></symbol>
+        <symbol id="tsdIconLayers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
+        <symbol id="tsdIconChart" viewBox="0 0 24 24"><path d="M4 19V9M12 19V5M20 19v-7"/></symbol>
+        <symbol id="tsdIconBolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></symbol>
+        <symbol id="tsdIconOne" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M12 8l-2.5 2"/></symbol>
+        <symbol id="tsdIconStar" viewBox="0 0 24 24"><path d="M12 3l2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L12 16.9 6.4 20.1l1.4-6.3-4.8-4.3 6.4-.6z"/></symbol>
+        <symbol id="tsdIconCheck" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16.5 9"/></symbol>
+        <symbol id="tsdIconArrowR" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+        <symbol id="tsdIconStep" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+      </defs>
+    </svg>
+
+    <div class="tsd-wrap" id="tsdWrap">
+
+      <!-- ============================ ROW 1 — TWO-STAGE ============================ -->
+      <div class="tsd-row tsd-row--two tsd-step" style="animation-delay:.05s">
+        <span class="tsd-row-tag">TWO-STAGE DETECTION</span>
+
+        <div class="tsd-row-body">
+          <div class="tsd-steps">
+
+            <!-- Image d'entrée -->
+            <div class="tsd-step-col tsd-step-col--input">
+              <div class="tsd-illus"><svg class="tsd-illus-svg" viewBox="0 0 300 170"><use href="#tsdScene"/></svg></div>
+              <p class="tsd-caption">Image d'entrée</p>
+            </div>
+
+            <div class="tsd-flow-arrow"><svg viewBox="0 0 24 24" width="26" height="26"><use href="#tsdIconArrowR"/></svg></div>
+
+            <!-- Etape 1 : proposals -->
+            <div class="tsd-step-col">
+              <p class="tsd-step-title">1. Génération de propositions de régions</p>
+              <div class="tsd-illus">
+                <svg class="tsd-illus-svg" viewBox="0 0 300 170"><use href="#tsdScene"/></svg>
+                <svg class="tsd-overlay" viewBox="0 0 300 170">
+                  <g fill="none" stroke="#EAB308" stroke-width="2">
+                    <rect x="10" y="48" width="46" height="62"/><rect x="20" y="58" width="34" height="48"/>
+                    <rect x="92" y="98" width="98" height="50"/><rect x="104" y="90" width="70" height="60"/>
+                    <rect x="112" y="102" width="56" height="30"/><rect x="212" y="86" width="62" height="66"/>
+                    <rect x="224" y="96" width="42" height="48"/><rect x="60" y="80" width="30" height="40"/>
+                  </g>
+                </svg>
+              </div>
+              <p class="tsd-caption">Le réseau propose plusieurs régions susceptibles de contenir <strong>des objets</strong>.</p>
+            </div>
+
+            <div class="tsd-flow-arrow"><svg viewBox="0 0 24 24" width="26" height="26"><use href="#tsdIconArrowR"/></svg></div>
+
+            <!-- Etape 2 : classification -->
+            <div class="tsd-step-col">
+              <p class="tsd-step-title">2. Classification des régions proposées</p>
+              <div class="tsd-crop-list">
+                <div class="tsd-crop-row">
+                  <span class="tsd-crop-thumb tsd-crop-thumb--car"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 16l1.5-6A3 3 0 0 1 8.4 8h7.2a3 3 0 0 1 2.9 2l1.5 6" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="16" width="18" height="4" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="7.5" cy="20" r="1.4" fill="currentColor"/><circle cx="16.5" cy="20" r="1.4" fill="currentColor"/></svg></span>
+                  <svg viewBox="0 0 24 24" width="16" height="16"><use href="#tsdIconArrowR"/></svg>
+                  <span class="tsd-crop-label">Voiture</span>
+                  <svg viewBox="0 0 24 24" width="15" height="15" class="tsd-crop-check"><use href="#tsdIconCheck"/></svg>
+                </div>
+                <div class="tsd-crop-row">
+                  <span class="tsd-crop-thumb tsd-crop-thumb--bike"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17l4-9h5l3 6M10 8H8"/></svg></span>
+                  <svg viewBox="0 0 24 24" width="16" height="16"><use href="#tsdIconArrowR"/></svg>
+                  <span class="tsd-crop-label">Vélo</span>
+                  <svg viewBox="0 0 24 24" width="15" height="15" class="tsd-crop-check"><use href="#tsdIconCheck"/></svg>
+                </div>
+                <div class="tsd-crop-row">
+                  <span class="tsd-crop-thumb tsd-crop-thumb--ped"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="6" r="2.4"/><path d="M12 9v7M12 12l-4 4M12 12l4 4M12 16l-3 6M12 16l3 6"/></svg></span>
+                  <svg viewBox="0 0 24 24" width="16" height="16"><use href="#tsdIconArrowR"/></svg>
+                  <span class="tsd-crop-label">Piéton</span>
+                  <svg viewBox="0 0 24 24" width="15" height="15" class="tsd-crop-check"><use href="#tsdIconCheck"/></svg>
+                </div>
+              </div>
+              <p class="tsd-caption">Chaque région est classifiée (objet / fond) et la classe est prédite.</p>
+            </div>
+
+            <div class="tsd-flow-arrow"><svg viewBox="0 0 24 24" width="26" height="26"><use href="#tsdIconArrowR"/></svg></div>
+
+            <!-- Etape 3 : raffinement -->
+            <div class="tsd-step-col">
+              <p class="tsd-step-title">3. Raffinement des boîtes et prédiction finale</p>
+              <div class="tsd-illus">
+                <svg class="tsd-illus-svg" viewBox="0 0 300 170"><use href="#tsdScene"/></svg>
+                <svg class="tsd-overlay" viewBox="0 0 300 170">
+                  <rect x="13" y="54" width="42" height="58" fill="none" stroke="#2563EB" stroke-width="2.4"/>
+                  <rect x="13" y="42" width="46" height="14" fill="#2563EB"/>
+                  <rect x="94" y="96" width="102" height="52" fill="none" stroke="#DC2626" stroke-width="2.4"/>
+                  <rect x="94" y="84" width="58" height="14" fill="#DC2626"/>
+                  <rect x="214" y="88" width="60" height="64" fill="none" stroke="#16A34A" stroke-width="2.4"/>
+                  <rect x="214" y="76" width="44" height="14" fill="#16A34A"/>
+                  <text x="16" y="52" class="tsd-tag-text">Piéton</text>
+                  <text x="97" y="94" class="tsd-tag-text">Voiture</text>
+                  <text x="217" y="86" class="tsd-tag-text">Vélo</text>
+                </svg>
+              </div>
+              <p class="tsd-caption">Affinement des boîtes englobantes et sortie des détections finales.</p>
+            </div>
+          </div>
+
+          <div class="tsd-sidecard tsd-sidecard--blue">
+            <div class="tsd-fact"><svg viewBox="0 0 24 24" width="20" height="20"><use href="#tsdIconTarget"/></svg><span>Précision élevée</span></div>
+            <div class="tsd-fact"><svg viewBox="0 0 24 24" width="20" height="20"><use href="#tsdIconHourglass"/></svg><span>Vitesse plus lente</span></div>
+            <div class="tsd-fact tsd-fact--examples"><svg viewBox="0 0 24 24" width="20" height="20"><use href="#tsdIconChart"/></svg><span>Exemples : R-CNN, Fast R-CNN, Faster R-CNN</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================ ROW 2 — ONE-STAGE (YOLO) ============================ -->
+      <div class="tsd-row tsd-row--one tsd-step" style="animation-delay:.16s">
+        <span class="tsd-row-tag">ONE-STAGE DETECTION (YOLO)</span>
+
+        <div class="tsd-row-body">
+          <div class="tsd-steps">
+
+            <!-- Image d'entrée -->
+            <div class="tsd-step-col tsd-step-col--input">
+              <div class="tsd-illus tsd-illus--sm"><svg class="tsd-illus-svg" viewBox="0 0 300 170"><use href="#tsdScene"/></svg></div>
+              <p class="tsd-caption">Image d'entrée</p>
+            </div>
+
+            <div class="tsd-flow-arrow"><svg viewBox="0 0 24 24" width="26" height="26"><use href="#tsdIconArrowR"/></svg></div>
+
+            <!-- Passe unique : CNN + prediction directe -->
+            <div class="tsd-step-col tsd-step-col--wide">
+              <p class="tsd-step-title tsd-step-title--green">Prédiction directe en une seule passe</p>
+              <div class="tsd-onepass">
+                <div class="tsd-cnn" aria-hidden="true">
+                  <span class="tsd-cnn-layer" style="--h:78%"></span>
+                  <span class="tsd-cnn-layer" style="--h:64%"></span>
+                  <span class="tsd-cnn-layer" style="--h:52%"></span>
+                  <span class="tsd-cnn-layer" style="--h:40%"></span>
+                  <span class="tsd-cnn-layer" style="--h:30%"></span>
+                  <span class="tsd-cnn-layer" style="--h:22%"></span>
+                </div>
+                <div class="tsd-illus">
+                  <svg class="tsd-illus-svg" viewBox="0 0 300 170"><use href="#tsdScene"/></svg>
+                  <svg class="tsd-overlay" viewBox="0 0 300 170">
+                    <rect x="94" y="96" width="102" height="52" fill="none" stroke="#DC2626" stroke-width="2.4"/>
+                    <rect x="94" y="84" width="30" height="14" fill="#DC2626"/>
+                    <rect x="214" y="88" width="60" height="64" fill="none" stroke="#16A34A" stroke-width="2.4"/>
+                    <rect x="214" y="76" width="26" height="14" fill="#16A34A"/>
+                  </svg>
+                </div>
+              </div>
+              <p class="tsd-caption">Le réseau prédit simultanément les classes et les boîtes englobantes pour toutes les régions de l'image en une seule passe.</p>
+            </div>
+
+            <div class="tsd-flow-arrow"><svg viewBox="0 0 24 24" width="26" height="26"><use href="#tsdIconArrowR"/></svg></div>
+
+            <!-- Predictions finales -->
+            <div class="tsd-step-col">
+              <p class="tsd-step-title tsd-step-title--green">Prédictions finales</p>
+              <div class="tsd-illus">
+                <svg class="tsd-illus-svg" viewBox="0 0 300 170"><use href="#tsdScene"/></svg>
+                <svg class="tsd-overlay" viewBox="0 0 300 170">
+                  <rect x="13" y="54" width="42" height="58" fill="none" stroke="#2563EB" stroke-width="2.4"/>
+                  <rect x="13" y="42" width="46" height="14" fill="#2563EB"/>
+                  <rect x="94" y="96" width="102" height="52" fill="none" stroke="#DC2626" stroke-width="2.4"/>
+                  <rect x="94" y="84" width="58" height="14" fill="#DC2626"/>
+                  <rect x="214" y="88" width="60" height="64" fill="none" stroke="#16A34A" stroke-width="2.4"/>
+                  <rect x="214" y="76" width="44" height="14" fill="#16A34A"/>
+                  <text x="16" y="52" class="tsd-tag-text">Piéton</text>
+                  <text x="97" y="94" class="tsd-tag-text">Voiture</text>
+                  <text x="217" y="86" class="tsd-tag-text">Vélo</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="tsd-sidecard tsd-sidecard--green">
+            <div class="tsd-fact"><svg viewBox="0 0 24 24" width="20" height="20"><use href="#tsdIconCheck"/></svg><span>Bon compromis précision / vitesse</span></div>
+            <div class="tsd-fact"><svg viewBox="0 0 24 24" width="20" height="20"><use href="#tsdIconBolt"/></svg><span>Très rapide (idéal temps réel)</span></div>
+            <div class="tsd-fact tsd-fact--examples"><svg viewBox="0 0 24 24" width="20" height="20"><use href="#tsdIconStar"/></svg><span>Exemple clé : YOLO (You Only Look Once)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================ COMPARAISON ============================ -->
+      <div class="tsd-compare tsd-step" style="animation-delay:.28s">
+        <p class="tsd-compare-title">COMPARAISON</p>
+
+        <div class="tsd-compare-row">
+          <span class="tsd-compare-tag tsd-compare-tag--blue">TWO-STAGE</span>
+          <div class="tsd-compare-cell"><svg viewBox="0 0 24 24" width="18" height="18"><use href="#tsdIconTarget"/></svg><span>Plus précise</span></div>
+          <div class="tsd-compare-cell"><svg viewBox="0 0 24 24" width="18" height="18"><use href="#tsdIconHourglass"/></svg><span>Plus lente</span></div>
+          <div class="tsd-compare-cell"><svg viewBox="0 0 24 24" width="18" height="18"><use href="#tsdIconCheck"/></svg><span>Étapes multiples (propositions + classification)</span></div>
+          <div class="tsd-compare-cell tsd-compare-cell--concl"><svg viewBox="0 0 24 24" width="18" height="18"><use href="#tsdIconArrowR"/></svg><span>Adaptée aux applications où la précision prime sur la vitesse</span></div>
+        </div>
+
+        <div class="tsd-compare-row">
+          <span class="tsd-compare-tag tsd-compare-tag--green">ONE-STAGE (YOLO)</span>
+          <div class="tsd-compare-cell"><svg viewBox="0 0 24 24" width="18" height="18"><use href="#tsdIconTarget"/></svg><span>Légèrement moins précise (mais en progrès)</span></div>
+          <div class="tsd-compare-cell"><svg viewBox="0 0 24 24" width="18" height="18"><use href="#tsdIconBolt"/></svg><span>Très rapide</span></div>
+          <div class="tsd-compare-cell"><svg viewBox="0 0 24 24" width="18" height="18"><use href="#tsdIconCheck"/></svg><span>Une seule étape (prédiction directe)</span></div>
+          <div class="tsd-compare-cell tsd-compare-cell--concl"><svg viewBox="0 0 24 24" width="18" height="18"><use href="#tsdIconArrowR"/></svg><span>Idéale pour les applications temps réel (vidéo, robotique, etc.)</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- ======================= ADD here  ======================= -->
+
+
+
+<!-- ======================= SLIDE — Anchor-Based vs Anchor-Free ======================= -->
+<section class="slide" data-title="Anchor-Based vs Anchor-Free">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">4-Architectures YOLO</p>
+    <h2 class="slide-title">
+      <span class="af-title-accent-red">Anchor-Based</span><span class="af-title-vs"> |</span><span class="af-title-accent-blue">Anchor-Free</span>
+    </h2>
+
+    <!-- ============ DEUX COLONNES : chaque camp est autonome (définition + traits + principe + exemples) ============ -->
+    <div class="af-split reveal-stagger">
+  
+      <!-- ---- COLONNE ANCHOR-BASED ---- -->
+      <div class="af-side af-red">
+        <h3><span class="af-side-dot"></span>Anchor-Based</h3>
+
+        <p class="af-side-def">Les détecteurs Anchor-Based reposent sur un ensemble de boîtes d'ancrage de tailles et de rapports d'aspect prédéfinis. La détection est formulée comme une régression des décalages des ancres accompagnée d'une classification.</p>
+
+ </div>
+      <!-- ---- COLONNE ANCHOR-FREE ---- -->
+      <div class="af-side af-blue">
+        <h3><span class="af-side-dot"></span>Anchor-Free</h3>
+
+        <p class="af-side-def">Les détecteurs Anchor-Free éliminent les ancres prédéfinies et formulent la localisation comme une prédiction directe des centres, des points clés ou des distances vers les contours de l'objet, réduisant ainsi la complexité de conception et le nombre d'hyperparamètres.</p>
+      </div>
+
+    </div>
+
+    <!-- ============ FRISE CHRONOLOGIQUE (HORIZONTALE) ============ -->
+    <div class="af-timeline-wrap reveal-item">
+      <div class="af-timeline">
+        <div class="af-node"><div class="af-node-dot"></div><div class="af-node-label">YOLOv1</div><div class="af-node-tag">Anchor-Based</div></div>
+        <div class="af-node"><div class="af-node-dot"></div><div class="af-node-label">YOLOv2</div><div class="af-node-tag">Anchor-Based</div></div>
+        <div class="af-node"><div class="af-node-dot"></div><div class="af-node-label">YOLOv3</div><div class="af-node-tag">Anchor-Based</div></div>
+        <div class="af-node"><div class="af-node-dot"></div><div class="af-node-label">YOLOv4</div><div class="af-node-tag">Anchor-Based</div></div>
+        <div class="af-node"><div class="af-node-dot"></div><div class="af-node-label">YOLOv5</div><div class="af-node-tag">Anchor-Based</div></div>
+        <div class="af-node af-blue af-seg-blue"><div class="af-node-dot"></div><div class="af-node-label">YOLOv6</div><div class="af-node-tag">Anchor-Free</div></div>
+        <div class="af-node af-exception"><div class="af-node-dot"></div><div class="af-node-label">YOLOv7</div><div class="af-node-tag">Anchor-Based*</div></div>
+        <div class="af-node af-blue af-seg-blue"><div class="af-node-dot"></div><div class="af-node-label">YOLOv8</div><div class="af-node-tag">Anchor-Free</div></div>
+        <div class="af-node af-blue"><div class="af-node-dot"></div><div class="af-node-label">YOLOv9</div><div class="af-node-tag">Anchor-Free</div></div>
+        <div class="af-node af-blue"><div class="af-node-dot"></div><div class="af-node-label">YOLOv10</div><div class="af-node-tag">Anchor-Free</div></div>
+        <div class="af-node af-blue"><div class="af-node-dot"></div><div class="af-node-label">YOLO11</div><div class="af-node-tag">Anchor-Free</div></div>
+        <div class="af-node af-blue"><div class="af-node-dot"></div><div class="af-node-label">YOLO26</div><div class="af-node-tag">Anchor-Free</div></div>
+      </div>
+      <div class="af-legend">
+        <span><span class="af-sw af-red"></span>Anchor-Based</span>
+        <span><span class="af-sw af-blue"></span>Anchor-Free</span>
+        <span><span class="af-sw af-exc"></span>YOLOv7 : retour ponctuel à l'anchor-based</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- ======================= SLIDE — Anchor-Based vs Anchor-Free (infographie visuelle) ======================= -->
+
+
+
+<section class="slide" data-title="Anchor-Based vs Anchor-Free — Comparaison visuelle">
+  <div class="slide-inner wide">
+
+    <svg class="icon-sprite" aria-hidden="true">
+      <symbol id="ancArrowR" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+      <symbol id="ancCheck" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+      <symbol id="ancCross" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+      <symbol id="ancThumb" viewBox="0 0 24 24"><path d="M7 22V11l4-9 2 1-1 6h7a2 2 0 0 1 2 2.4l-1.6 8A2 2 0 0 1 17.4 21H7z"/><path d="M7 11H4a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3"/></symbol>
+      <symbol id="ancImg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="10" r="1.6"/><path d="M21 16l-5.2-5.2a1.5 1.5 0 0 0-2.1 0L4 20"/></symbol>
+      <symbol id="ancDetect" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><rect x="6" y="7" width="8" height="9" rx="1" stroke-dasharray="2 2"/><circle cx="17.5" cy="9.5" r="2.3"/></symbol>
+      <symbol id="ancAnchor" viewBox="0 0 24 24"><rect x="4" y="3" width="9" height="12" rx="1"/><rect x="9" y="8" width="11" height="13" rx="1"/></symbol>
+      <symbol id="ancPoint" viewBox="0 0 24 24"><circle cx="6" cy="6" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="6" r="1.6" fill="currentColor" stroke="none"/><circle cx="18" cy="6" r="1.6" fill="currentColor" stroke="none"/><circle cx="6" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="2.4" fill="none"/><circle cx="18" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="6" cy="18" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="18" r="1.6" fill="currentColor" stroke="none"/><circle cx="18" cy="18" r="1.6" fill="currentColor" stroke="none"/></symbol>
+    </svg>
+
+    <p class="eyebrow center">Localisation des objets</p>
+    <h2 class="slide-title anc-title">
+      <span class="anc-accent--based">ANCHOR-BASED</span><span class="anc-vs">vs</span><span class="anc-accent--free">ANCHOR-FREE</span>
+    </h2>
+
+    <div class="anc-grid reveal-stagger">
+
+      <!-- ============ EN-TÊTES ============ -->
+      <div class="anc-head anc-head--based">
+        <strong>ANCHOR-BASED</strong>
+        <span>Utilise des boîtes d'ancrage prédéfinies</span>
+      </div>
+      <div class="anc-head anc-head--free">
+        <strong>ANCHOR-FREE</strong>
+        <span>Prédit directement les objets sans boîtes d'ancrage</span>
+      </div>
+
+      <!-- ============ DESCRIPTIONS ============ -->
+      <p class="anc-desc anc-desc--based">Placer plusieurs <strong>boîtes d'ancrage (anchors)</strong> de différentes tailles et ratios sur la carte de caractéristiques. Le modèle prédit pour chaque ancre&nbsp;: l'offset de la boîte et la probabilité d'objet.</p>
+      <p class="anc-desc anc-desc--free">Chaque position (pixel ou point) sur la carte de caractéristiques prédit <strong>directement</strong> s'il y a un objet (probabilité) et, si oui, les coordonnées de la boîte.</p>
+
+      <!-- ============ PIPELINES ============ -->
+      <div class="anc-pipeline anc-pipeline--based">
+        <div class="anc-pipe-step">
+          <div class="anc-pipe-icon"><svg><use href="#ancImg"/></svg></div>
+          <span>Image d'entrée</span>
+        </div>
+        <svg class="anc-pipe-arrow"><use href="#ancArrowR"/></svg>
+        <div class="anc-pipe-step">
+          <div class="anc-pipe-icon anc-pipe-icon--grid-based"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <span>Carte de caract.</span>
+        </div>
+        <svg class="anc-pipe-arrow"><use href="#ancArrowR"/></svg>
+        <div class="anc-pipe-step">
+          <div class="anc-pipe-icon"><svg style="color:var(--abd-blue)"><use href="#ancAnchor"/></svg></div>
+          <span>Génération anchors</span>
+        </div>
+        <div class="anc-pipe-note">
+          <b>Le modèle prédit pour chaque anchor :</b>
+          <ul><li>offset (dx, dy, dw, dh)</li><li>score d'objet</li></ul>
+        </div>
+        <div class="anc-pipe-step">
+          <div class="anc-pipe-icon anc-pipe-icon--nms">NMS</div>
+          <span>Filtrage</span>
+        </div>
+        <svg class="anc-pipe-arrow"><use href="#ancArrowR"/></svg>
+        <div class="anc-pipe-step">
+          <div class="anc-pipe-icon"><svg style="color:var(--abd-blue)"><use href="#ancDetect"/></svg></div>
+          <span>Détections finales</span>
+        </div>
+      </div>
+
+      <div class="anc-pipeline anc-pipeline--free">
+        <div class="anc-pipe-step">
+          <div class="anc-pipe-icon"><svg><use href="#ancImg"/></svg></div>
+          <span>Image d'entrée</span>
+        </div>
+        <svg class="anc-pipe-arrow"><use href="#ancArrowR"/></svg>
+        <div class="anc-pipe-step">
+          <div class="anc-pipe-icon anc-pipe-icon--grid-free"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <span>Carte de caract.</span>
+        </div>
+        <svg class="anc-pipe-arrow"><use href="#ancArrowR"/></svg>
+        <div class="anc-pipe-step">
+          <div class="anc-pipe-icon"><svg style="color:var(--abd-green)"><use href="#ancPoint"/></svg></div>
+          <span>Prédiction par point</span>
+        </div>
+        <div class="anc-pipe-note">
+          <b>Le modèle prédit pour chaque point :</b>
+          <ul><li>probabilité d'objet</li><li>boîte (x, y, w, h)</li></ul>
+        </div>
+        <div class="anc-pipe-step">
+          <div class="anc-pipe-icon anc-pipe-icon--nms">NMS</div>
+          <span>Filtrage</span>
+        </div>
+        <svg class="anc-pipe-arrow"><use href="#ancArrowR"/></svg>
+        <div class="anc-pipe-step">
+          <div class="anc-pipe-icon"><svg style="color:var(--abd-green)"><use href="#ancDetect"/></svg></div>
+          <span>Détections finales</span>
+        </div>
+      </div>
+
+      <!-- ============ ILLUSTRATIONS (anchors vs points) ============ -->
+      <div class="anc-visual anc-visual--based">
+        <svg viewBox="0 0 220 108" width="230">
+          <rect x="18" y="30" width="40" height="58" rx="2" fill="none" stroke="#1D4ED8" stroke-width="2"/>
+          <rect x="62" y="16" width="66" height="88" rx="2" fill="none" stroke="#D97706" stroke-width="2" stroke-dasharray="4 3"/>
+          <rect x="108" y="4" width="94" height="100" rx="2" fill="none" stroke="#16A34A" stroke-width="2" stroke-dasharray="2 3"/>
+          <circle cx="108" cy="54" r="3" fill="#0B2A4A"/>
+        </svg>
+        <div class="anc-legend">
+          <span class="anc-legend-item"><span class="anc-swatch" style="background:#fff;border:2px solid #1D4ED8"></span>Anchor petit</span>
+          <span class="anc-legend-item"><span class="anc-swatch" style="background:#fff;border:2px dashed #D97706"></span>Anchor moyen</span>
+          <span class="anc-legend-item"><span class="anc-swatch" style="background:#fff;border:2px dashed #16A34A"></span>Anchor grand</span>
+          <span class="anc-legend-item"><span class="anc-swatch anc-swatch--dot" style="background:#0B2A4A"></span>Centre de la cellule</span>
+        </div>
+        <p class="anc-visual-caption">Chaque cellule a plusieurs anchors (tailles / ratios différents)</p>
+      </div>
+
+      <div class="anc-visual anc-visual--free">
+        <svg viewBox="0 0 220 108" width="230">
+          <g fill="#3F7D3F">
+            <circle cx="20" cy="14" r="3.4"/><circle cx="60" cy="14" r="3.4"/><circle cx="100" cy="14" r="3.4"/><circle cx="140" cy="14" r="3.4"/><circle cx="180" cy="14" r="3.4"/>
+            <circle cx="20" cy="54" r="3.4"/><circle cx="60" cy="54" r="3.4"/><circle cx="140" cy="54" r="3.4"/><circle cx="180" cy="54" r="3.4"/>
+            <circle cx="20" cy="94" r="3.4"/><circle cx="60" cy="94" r="3.4"/><circle cx="100" cy="94" r="3.4"/><circle cx="140" cy="94" r="3.4"/><circle cx="180" cy="94" r="3.4"/>
+          </g>
+          <circle cx="100" cy="54" r="5" fill="#3F7D3F"/>
+          <rect x="76" y="30" width="48" height="48" rx="2" fill="none" stroke="#DC2626" stroke-width="2" stroke-dasharray="4 3"/>
+        </svg>
+        <div class="anc-legend">
+          <span class="anc-legend-item"><span class="anc-swatch anc-swatch--dot" style="background:#3F7D3F"></span>Point de prédiction (potentiel centre)</span>
+          <span class="anc-legend-item"><span class="anc-swatch" style="background:#fff;border:2px dashed #DC2626"></span>Boîte prédite</span>
+        </div>
+        <p class="anc-visual-caption">Chaque point prédit directement la boîte s'il est le centre d'un objet</p>
+      </div>
+
+      <!-- ============ POSITIF / NÉGATIF ============ -->
+      <div class="anc-posneg anc-posneg--based">
+        <span class="anc-chip anc-chip--pos"><svg><use href="#ancCheck"/></svg>Anchor positif (bon overlap avec GT)</span>
+        <span class="anc-chip anc-chip--neg"><svg><use href="#ancCross"/></svg>Anchor négatif (pas d'overlap)</span>
+        <span class="anc-chip anc-chip--ignore"><span class="anc-dash"></span>Ignoré (overlap intermédiaire)</span>
+      </div>
+
+      <div class="anc-posneg anc-posneg--free">
+        <span class="anc-chip anc-chip--pos"><svg><use href="#ancCheck"/></svg>Point positif (proche du centre)</span>
+        <span class="anc-chip anc-chip--neg"><svg><use href="#ancCross"/></svg>Autres points (négatifs)</span>
+      </div>
+
+    </div>
+
+    <!-- ============ SYNTHÈSE FINALE ============ -->
+    <div class="anc-summary reveal-item">
+      <div class="anc-summary-col">
+        <strong class="anc-accent--based">ANCHOR-BASED</strong>
+        <ul>
+          <li class="pos">Très efficace et mature</li>
+          <li class="pos">Bonnes performances sur petits objets (avec anchors adaptés)</li>
+          <li class="neg">Beaucoup d'anchors → plus de calcul et d'hyperparamètres</li>
+          <li class="neg">Déséquilibre fort entre anchors positifs et négatifs</li>
+        </ul>
+      </div>
+
+      <div class="anc-summary-vs">
+        <span>VS</span>
+        <div class="anc-summary-thumb"><svg><use href="#ancThumb"/></svg></div>
+      </div>
+
+      <div class="anc-summary-col anc-summary-col--right">
+        <strong class="anc-accent--free">ANCHOR-FREE</strong>
+        <ul>
+          <li class="pos">Plus simple : pas d'anchors à définir</li>
+          <li class="pos">Moins de calcul et d'hyperparamètres</li>
+          <li class="pos">Meilleure généralisation sur différentes échelles</li>
+          <li class="neg">Peut être moins performant sur très petits objets (selon design)</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<!-- ======================= SLIDE — NMS (Non-Maximum Suppression) ======================= -->
+
+
+
+<section class="slide" data-title="NMS">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">4-Architectures YOLO</p>
+    <h2 class="slide-title reveal-item">Non-Maximum Suppression (NMS)</h2>
+
+    <div class="nms-split reveal-stagger">
+
+      <!-- ===== Colonne gauche : définition, comparatif, principe ===== -->
+      <div class="nms-col">
+
+        <div class="nms-def">
+          <p>
+            Le <strong>Non-Maximum Suppression (NMS)</strong> est une étape de post-traitement
+            qui élimine les boîtes englobantes redondantes afin de ne conserver que la
+            <strong>détection la plus pertinente</strong> pour chaque objet.
+          </p>
+        </div>
+
+        <div class="nms-compare">
+          <div class="nms-side nms-red">
+            <h3><span class="nms-side-dot"></span>Sans NMS</h3>
+            <ul>
+              <li>Plusieurs boîtes entourent le même objet</li>
+              <li>Résultats redondants</li>
+              <li>Faux positifs</li>
+            </ul>
+          </div>
+          <div class="nms-side nms-cyan">
+            <h3><span class="nms-side-dot"></span>Avec NMS</h3>
+            <ul>
+              <li>Une seule boîte est conservée</li>
+              <li>Détection plus propre</li>
+              <li>Résultat final plus fiable</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="nms-steps">
+          <h4>Principe de fonctionnement</h4>
+          <ol>
+            <li>Trier les boîtes par score de confiance</li>
+            <li>Conserver la boîte ayant le score le plus élevé</li>
+            <li>Calculer l'IoU (Intersection over Union) avec les autres boîtes</li>
+            <li>Supprimer celles dont l'IoU dépasse un seuil</li>
+            <li>Répéter jusqu'à épuisement des boîtes</li>
+          </ol>
+        </div>
+
+      </div>
+
+      <!-- ===== Colonne droite : schéma IoU + avantages/limites ===== -->
+      <div class="nms-col">
+
+        <div class="nms-visual">
+          <div class="nms-visual-caption">
+            <span>Aperçu · IoU entre deux boîtes</span>
+            <span>seuil = <b>0.5</b></span>
+          </div>
+
+          <svg viewBox="0 0 460 240" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="nmsGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="var(--line)" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="460" height="240" fill="url(#nmsGrid)"/>
+
+            <!-- objet réel (silhouette) -->
+            <ellipse cx="230" cy="135" rx="55" ry="65" fill="var(--bg-soft)" stroke="var(--line)" stroke-width="1.5"/>
+
+            <!-- boîte supprimée (score plus bas) -->
+            <g id="nmsSuppressed" class="nms-fade" style="animation-delay:.1s">
+              <rect x="150" y="55" width="150" height="160" fill="none" stroke="#C7532F" stroke-width="2.5" stroke-dasharray="6 4"/>
+              <rect x="150" y="37" width="66" height="19" fill="#C7532F"/>
+              <text x="158" y="51" font-family="var(--f-mono)" font-size="11" fill="#fff" font-weight="700">0.71</text>
+            </g>
+
+            <!-- boîte conservée (score max) -->
+            <g class="nms-fade" style="animation-delay:.35s">
+              <rect x="175" y="40" width="160" height="175" fill="none" stroke="var(--cyan-500)" stroke-width="3"/>
+              <rect x="175" y="21" width="66" height="19" fill="var(--cyan-500)"/>
+              <text x="183" y="35" font-family="var(--f-mono)" font-size="11" fill="#fff" font-weight="700">0.94</text>
+            </g>
+
+            <!-- indication IoU -->
+            <g class="nms-fade" style="animation-delay:.6s">
+              <line x1="300" y1="122" x2="345" y2="82" stroke="var(--navy-700)" stroke-width="1.5" stroke-dasharray="3 3"/>
+              <text x="288" y="74" font-family="var(--f-mono)" font-size="11" fill="var(--navy-800)" font-weight="600">IoU = 0.68</text>
+            </g>
+          </svg>
+
+          <div class="nms-legend">
+            <span><span class="nms-sw nms-red"></span>score 0.71 — supprimée</span>
+            <span><span class="nms-sw nms-cyan"></span>score 0.94 — conservée</span>
+            <span><span class="nms-sw nms-navy"></span>IoU &gt; seuil</span>
+          </div>
+        </div>
+
+        <div class="nms-advlim">
+          <div class="nms-side nms-cyan">
+            <h3><span class="nms-side-dot"></span>Avantages</h3>
+            <ul>
+              <li>Réduit les détections dupliquées</li>
+              <li>Améliore la lisibilité des résultats</li>
+              <li>Diminue les faux positifs</li>
+              <li>Faible coût de calcul</li>
+            </ul>
+          </div>
+          <div class="nms-side nms-red">
+            <h3><span class="nms-side-dot"></span>Limites</h3>
+            <ul>
+              <li>Peut supprimer une détection correcte si deux objets sont très proches</li>
+              <li>Performances dépendantes du seuil d'IoU choisi</li>
+              <li>Ajoute une étape après l'inférence</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Rejoue l'animation d'apparition des boîtes du schéma IoU au clic
+  (function () {
+    var section = document.currentScript.previousElementSibling;
+    var panel = section && section.querySelector ? section.querySelector('.nms-visual') : null;
+    if (panel) {
+      panel.addEventListener('click', function () {
+        panel.querySelectorAll('.nms-fade').forEach(function (el) {
+          el.style.animation = 'none';
+          void el.offsetWidth;
+          el.style.animation = '';
+        });
+      });
+    }
+  })();
+</script>
+
+
+
+<!-- ======================= SLIDE — MÉTHODOLOGIE EXPÉRIMENTALE ======================= -->
+<section class="slide" data-title="loss function">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">Fonctions d'optimisation</p>
+    <h2 class="lf-title">Évolution des fonctions de perte (Loss Functions) dans la famille YOLO</h2>
+
+    <div class="lf-grid">
+
+      <!-- ============ PARTIE 1 — RÔLE DE LA LOSS ============ -->
+      <div class="lf-role-card">
+        <h3 class="lf-card-title">Rôle de la fonction de perte</h3>
+        <p class="lf-role-text">
+          La fonction de perte (Loss Function) constitue le critère d'optimisation du modèle.
+          Elle mesure l'écart entre les prédictions et les annotations de référence afin
+          d'ajuster les paramètres du réseau par rétropropagation.
+        </p>
+        <p class="lf-role-sub">Dans YOLO, elle optimise simultanément :</p>
+        <ul class="lf-role-list">
+          <li>Localisation des boîtes englobantes</li>
+          <li>Classification des objets</li>
+          <li>Objectness (confiance)</li>
+        </ul>
+
+        <div class="lf-formula-box">
+          \[ L_{total} = L_{box} + L_{cls} + L_{obj} \]
+        </div>
+      </div>
+
+      <!-- ============ PARTIE 2 — TABLEAU ÉVOLUTION ============ -->
+      <div class="lf-table-card">
+        <h3 class="lf-card-title">Évolution des fonctions de perte</h3>
+
+        <table class="lf-table">
+          <thead>
+            <tr>
+              <th>Génération YOLO</th>
+              <th>Fonction de perte</th>
+              <th>Contribution</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>YOLOv1</td>
+              <td><span class="lf-trigger" data-key="mse">MSE</span></td>
+              <td>Première régression des coordonnées</td>
+            </tr>
+            <tr>
+              <td>YOLOv2 – YOLOv3</td>
+              <td><span class="lf-trigger" data-key="iou">IoU Loss</span></td>
+              <td>Optimisation basée sur le recouvrement</td>
+            </tr>
+            <tr>
+              <td>YOLOv4 – YOLOv7</td>
+              <td><span class="lf-trigger" data-key="ciou">CIoU Loss</span></td>
+              <td>Intègre overlap, distance et ratio</td>
+            </tr>
+            <tr>
+              <td>YOLOX</td>
+              <td>
+                <span class="lf-trigger" data-key="iou">IoU Loss</span> +
+                <span class="lf-trigger" data-key="simota">SimOTA</span>
+              </td>
+              <td>Assignation dynamique</td>
+            </tr>
+            <tr>
+              <td>YOLOv8 – YOLOv13</td>
+              <td>
+                <span class="lf-trigger" data-key="dfl">DFL</span> +
+                <span class="lf-trigger" data-key="ciou">CIoU</span>
+              </td>
+              <td>Régression probabiliste des coordonnées</td>
+            </tr>
+            <tr>
+              <td>YOLO26</td>
+              <td><span class="lf-trigger" data-key="progloss">ProgLoss</span></td>
+              <td>Optimisation progressive</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============ OVERLAY + DRAWER ============ -->
+  <div class="lf-overlay" id="lfOverlay"></div>
+  <aside class="lf-drawer" id="lfDrawer">
+    <button class="lf-close" id="lfClose" aria-label="Fermer">✕ Fermer</button>
+    <div class="lf-drawer-content" id="lfDrawerContent"></div>
+  </aside>
+</section>
+
+<!-- MathJax (à ne charger qu'une seule fois dans le document, idéalement dans <head>) -->
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+
+<style>
+/* ========= LAYOUT ========= */
+.lf-title{
+  font-family: var(--f-display);
+  font-size: 1.55rem;
+  color: var(--navy-800);
+  margin: 4px 0 20px;
+}
+
+.lf-grid{
+  display: grid;
+  grid-template-columns: 0.85fr 1.3fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.lf-card-title{
+  font-family: var(--f-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy-800);
+  margin: 0 0 12px;
+}
+
+/* ========= PARTIE 1 — RÔLE ========= */
+.lf-role-card{
+  background: var(--gray-50, #f8fafc);
+  border: 1px solid var(--line-soft, #e2e8f0);
+  border-radius: 14px;
+  padding: 22px 24px;
+}
+
+.lf-role-text{
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: #334155;
+  margin: 0 0 14px;
+}
+
+.lf-role-sub{
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy-800);
+  margin: 0 0 8px;
+}
+
+.lf-role-list{
+  margin: 0 0 18px;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lf-role-list li{
+  font-size: 0.85rem;
+  color: #334155;
+}
+
+.lf-formula-box{
+  background: #ffffff;
+  border: 1px solid var(--line-soft, #e2e8f0);
+  border-left: 4px solid #10B8CE;
+  border-radius: 8px;
+  padding: 14px 16px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--navy-800);
+}
+
+/* ========= PARTIE 2 — TABLEAU ========= */
+.lf-table-card{
+  background: #ffffff;
+  border: 1px solid var(--line-soft, #e2e8f0);
+  border-radius: 14px;
+  padding: 20px 22px;
+}
+
+.lf-table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.lf-table thead th{
+  text-align: left;
+  font-family: var(--f-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #64748b;
+  padding: 8px 10px;
+  border-bottom: 2px solid var(--line-soft, #e2e8f0);
+}
+
+.lf-table tbody td{
+  padding: 10px;
+  border-bottom: 1px solid var(--line-soft, #eef2f6);
+  color: #334155;
+  transition: background 0.15s ease;
+}
+
+.lf-table tbody tr:hover td{
+  background: #eafcff;
+}
+
+.lf-trigger{
+  color: #0B7285;
+  font-weight: 700;
+  cursor: pointer;
+  border-bottom: 1px dashed #0B7285;
+  transition: color 0.15s ease;
+}
+
+.lf-trigger:hover{
+  color: #10B8CE;
+}
+
+.lf-hint{
+  margin: 10px 0 0;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* ========= OVERLAY + DRAWER ========= */
+.lf-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 42, 74, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 90;
+}
+
+.lf-overlay.active{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lf-drawer{
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(440px, 92vw);
+  background: #ffffff;
+  box-shadow: -12px 0 40px rgba(11, 42, 74, 0.18);
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  z-index: 91;
+  overflow-y: auto;
+  padding: 26px 26px 40px;
+}
+
+.lf-drawer.active{
+  transform: translateX(0);
+}
+
+.lf-close{
+  background: var(--gray-50, #f1f5f9);
+  border: 1px solid var(--line-soft, #e2e8f0);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--navy-800);
+  cursor: pointer;
+  margin-bottom: 18px;
+}
+
+.lf-close:hover{ background: #e2e8f0; }
+
+.lf-drawer h4{
+  font-family: var(--f-display);
+  font-size: 1.1rem;
+  color: var(--navy-800);
+  margin: 0 0 4px;
+}
+
+.lf-drawer .lf-versions{
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #0B7285;
+  background: #eafcff;
+  border-radius: 6px;
+  padding: 3px 9px;
+  margin-bottom: 16px;
+}
+
+.lf-drawer .lf-section-label{
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  color: #64748b;
+  margin: 18px 0 8px;
+}
+
+.lf-drawer p{
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #334155;
+  margin: 0 0 6px;
+}
+
+.lf-drawer .lf-math{
+  background: var(--gray-50, #f8fafc);
+  border: 1px solid var(--line-soft, #e2e8f0);
+  border-radius: 8px;
+  padding: 12px 14px;
+  text-align: center;
+  margin: 8px 0 14px;
+  overflow-x: auto;
+}
+
+.lf-drawer ul{
+  margin: 0 0 4px;
+  padding-left: 18px;
+}
+
+.lf-drawer li{
+  font-size: 0.83rem;
+  line-height: 1.55;
+  color: #334155;
+  margin-bottom: 4px;
+}
+
+.lf-drawer .lf-terms li{ color: #475569; }
+
+.lf-note{
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.8rem;
+  color: #9a3412;
+  margin-top: 6px;
+}
+
+@media (max-width: 900px){
+  .lf-grid{ grid-template-columns: 1fr; }
+}
+</style>
+
+<script>
+(function(){
+
+  const lfData = {
+    mse: {
+      title: "MSE — Mean Squared Error",
+      versions: "YOLOv1",
+      objectif: "Mesurer l'erreur quadratique entre les coordonnées prédites et les coordonnées réelles des boîtes englobantes.",
+      math: "\\[ L = \\sum_{i=1}^{n} (y_i - \\hat{y}_i)^2 \\]",
+      terms: [
+        "y_i : valeur réelle (annotation de référence) pour la i-ème sortie",
+        "ŷ_i : valeur prédite par le modèle",
+        "n : nombre total de sorties comparées (coordonnées, classes, etc.)"
+      ],
+      avantages: ["Simple à calculer et à dériver", "Facile à intégrer dans une rétropropagation standard"],
+      limites: ["Ne tient pas compte de la géométrie réelle du recouvrement entre boîtes", "Sensible à l'échelle des objets (pénalise différemment petits et grands objets)"]
+    },
+    iou: {
+      title: "IoU Loss — Intersection over Union",
+      versions: "YOLOv2 – YOLOv3 (et base des variantes GIoU / DIoU / CIoU)",
+      objectif: "Optimiser directement le recouvrement entre la boîte prédite et la boîte de référence, plutôt que des coordonnées brutes.",
+      math: "\\[ L_{IoU} = 1 - IoU, \\quad IoU = \\frac{|B_p \\cap B_{gt}|}{|B_p \\cup B_{gt}|} \\]",
+      terms: [
+        "B_p : boîte englobante prédite",
+        "B_gt : boîte englobante de référence (ground truth)",
+        "IoU : taux de recouvrement entre les deux boîtes"
+      ],
+      avantages: ["Directement liée à la métrique d'évaluation (mAP basé sur IoU)", "Invariante à l'échelle des objets"],
+      limites: ["Gradient nul lorsque les boîtes ne se chevauchent pas du tout", "Ne distingue pas différentes configurations de non-recouvrement"],
+      extra: {
+        label: "Évolutions vers CIoU",
+        text: "Pour corriger ces limites, deux variantes ont été proposées avant CIoU :",
+        blocks: [
+          { name: "GIoU", math: "\\[ L_{GIoU} = 1 - GIoU, \\quad GIoU = IoU - \\frac{|C \\setminus (B_p \\cup B_{gt})|}{|C|} \\]", note: "C : plus petite boîte englobant à la fois B_p et B_gt. GIoU corrige le gradient nul en cas de non-recouvrement." },
+          { name: "DIoU", math: "\\[ L_{DIoU} = 1 - IoU + \\frac{\\rho^2(b, b_{gt})}{c^2} \\]", note: "ρ : distance euclidienne entre les centres des boîtes ; c : diagonale de la boîte englobante C. DIoU accélère la convergence en pénalisant la distance entre centres." }
+        ]
+      }
+    },
+    ciou: {
+      title: "CIoU Loss — Complete IoU",
+      versions: "YOLOv4 – YOLOv7, combinée à DFL dans YOLOv8 – YOLOv13",
+      objectif: "Affiner la régression des boîtes en intégrant simultanément le recouvrement, la distance entre centres et la cohérence du ratio largeur/hauteur.",
+      math: "\\[ L_{CIoU} = 1 - IoU + \\frac{\\rho^2(b, b_{gt})}{c^2} + \\alpha v \\]",
+      terms: [
+        "ρ²(b, b_gt) : distance euclidienne au carré entre les centres des boîtes",
+        "c : diagonale de la plus petite boîte englobant B_p et B_gt",
+        "v : mesure la cohérence du ratio largeur/hauteur, v = (4/π²)·(arctan(w_gt/h_gt) − arctan(w/h))²",
+        "α : coefficient de pondération, α = v / ((1 − IoU) + v)"
+      ],
+      avantages: ["Convergence plus rapide que IoU/GIoU/DIoU seuls", "Prend en compte la forme (ratio) en plus de la position et du recouvrement"],
+      limites: ["Formulation plus complexe, coût de calcul légèrement supérieur", "Toujours limitée par la précision de la régression directe des coordonnées (résolue ensuite par DFL)"]
+    },
+    simota: {
+      title: "SimOTA — Simplified Optimal Transport Assignment",
+      versions: "YOLOX",
+      objectif: "Remplacer l'assignation statique des ancres par une assignation dynamique : chaque objet de référence choisit ses meilleures prédictions positives selon un coût global.",
+      math: "\\[ c_{ij} = L^{cls}_{ij} + \\lambda \\cdot L^{reg}_{ij} \\]",
+      terms: [
+        "c_ij : coût d'assignation entre la prédiction i et l'objet de référence j",
+        "L^cls_ij : coût de classification (écart de confiance de classe)",
+        "L^reg_ij : coût de régression (basé sur l'IoU Loss entre les deux boîtes)",
+        "λ : facteur d'équilibrage entre les deux coûts"
+      ],
+      avantages: ["Assignation dynamique adaptée à la forme et à la taille de chaque objet", "Réduit le déséquilibre entre échantillons positifs et négatifs"],
+      limites: ["Nécessite une phase d'assignation supplémentaire pendant l'entraînement (coût calculatoire additionnel)", "Introduit des hyperparamètres (nombre de candidats top-k, λ) à régler"]
+    },
+    dfl: {
+      title: "DFL — Distribution Focal Loss",
+      versions: "YOLOv8 – YOLOv13",
+      objectif: "Modéliser chaque coordonnée d'une boîte non plus comme une valeur unique, mais comme une distribution discrète de probabilités sur des positions candidates, afin de mieux gérer l'incertitude de localisation.",
+      math: "\\[ L_{DFL} = -\\sum_i y_i \\log(p_i) \\]",
+      terms: [
+        "p_i : probabilité prédite que la coordonnée corresponde au bin discret i",
+        "y_i : cible de supervision (souvent une interpolation entre les deux bins encadrant la valeur réelle)"
+      ],
+      avantages: ["Modélise l'incertitude autour des bords de l'objet", "Améliore la précision de localisation par rapport à une régression directe"],
+      limites: ["Coût de calcul plus élevé (Softmax sur plusieurs bins par coordonnée)", "Difficile à quantifier efficacement sur du matériel embarqué (NPU/DSP), ce qui a motivé sa suppression dans YOLO26"],
+      extra: {
+        label: "Décodage final",
+        text: "La position finale n'est pas un simple argmax : elle est obtenue par l'espérance mathématique de la distribution discrète prédite, c'est-à-dire une moyenne pondérée des positions candidates par leurs probabilités."
+      }
+    },
+    progloss: {
+      title: "ProgLoss — Progressive Loss Balancing",
+      versions: "YOLO26",
+      objectif: "Stabiliser l'entraînement de l'architecture end-to-end (sans NMS) en ajustant dynamiquement, au fil des époques, le poids relatif entre la perte de classification et la perte de régression des boîtes.",
+      math: null,
+      note: "La formulation mathématique détaillée n'est pas publiée dans l'article d'origine (Ultralytics) ; ProgLoss est présenté comme une stratégie d'optimisation progressive remplaçant DFL, qui rééquilibre les termes de la perte au cours de l'entraînement plutôt que d'utiliser des poids fixes.",
+      avantages: ["Réduit l'instabilité d'entraînement liée à la suppression de DFL", "Améliore la convergence sur les architectures NMS-free"],
+      limites: ["Absence de spécification mathématique publique empêchant une reproduction exacte", "Mécanisme encore peu documenté en dehors des communications Ultralytics"]
+    }
+  };
+
+  const overlay = document.getElementById('lfOverlay');
+  const drawer = document.getElementById('lfDrawer');
+  const content = document.getElementById('lfDrawerContent');
+  const closeBtn = document.getElementById('lfClose');
+
+  function renderBlock(item){
+    let html = `<h4>${item.title}</h4><span class="lf-versions">Utilisée par : ${item.versions}</span>`;
+
+    html += `<p class="lf-section-label">Objectif</p><p>${item.objectif}</p>`;
+
+    if(item.math){
+      html += `<p class="lf-section-label">Formule</p><div class="lf-math">${item.math}</div>`;
+      html += `<p class="lf-section-label">Explication des termes</p><ul class="lf-terms">`;
+      item.terms.forEach(t => html += `<li>${t}</li>`);
+      html += `</ul>`;
+    } else if(item.note){
+      html += `<p class="lf-section-label">Formule</p><div class="lf-note">${item.note}</div>`;
+    }
+
+    if(item.extra){
+      html += `<p class="lf-section-label">${item.extra.label}</p>`;
+      if(item.extra.text) html += `<p>${item.extra.text}</p>`;
+      if(item.extra.blocks){
+        item.extra.blocks.forEach(b => {
+          html += `<p style="font-weight:700;color:var(--navy-800);margin-top:10px;">${b.name}</p>`;
+          html += `<div class="lf-math">${b.math}</div>`;
+          html += `<p style="font-size:0.78rem;color:#64748b;">${b.note}</p>`;
+        });
+      }
+    }
+
+    html += `<p class="lf-section-label">Avantages</p><ul>`;
+    item.avantages.forEach(a => html += `<li>${a}</li>`);
+    html += `</ul>`;
+
+    html += `<p class="lf-section-label">Limites</p><ul>`;
+    item.limites.forEach(l => html += `<li>${l}</li>`);
+    html += `</ul>`;
+
+    return html;
+  }
+
+  function openDrawer(key){
+    const item = lfData[key];
+    if(!item) return;
+    content.innerHTML = renderBlock(item);
+    overlay.classList.add('active');
+    drawer.classList.add('active');
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([content]);
+    }
+  }
+
+  function closeDrawer(){
+    overlay.classList.remove('active');
+    drawer.classList.remove('active');
+  }
+
+  document.querySelectorAll('.lf-trigger').forEach(el => {
+    el.addEventListener('click', () => openDrawer(el.dataset.key));
+  });
+
+  overlay.addEventListener('click', closeDrawer);
+  closeBtn.addEventListener('click', closeDrawer);
+
+})();
+</script>
+
+
+
+
+<!-- ======================= SLIDE — YOLOv1 → YOLOv3 ======================= -->
+<section class="slide" data-title="YOLOv1 → YOLOv3">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">4-Architectures YOLO</p>
+    <h2 class="slide-title reveal-item">Évolution architecturale de YOLOv1 à YOLOv3</h2>
+    <p class="soft-note reveal-item" style="font-size:12.5px; margin:-20px 0 20px; display:block;"> </p>
+
+    <div class="yg-rows reveal-stagger">
+
+      <div class="yg-row yg-c1">
+        <div class="yg-label">
+          <span class="yg-badge">YOLOv1 (2016)</span>
+          <p class="yg-tagline">Single Shot Detection + Grid Prediction</p>
+        </div>
+        <div class="yg-body">
+          <div class="yg-chain">
+          <button type="button" class="yg-box" data-term="Input Image" data-def="Image brute redimensionnée à une résolution fixe (448×448) avant d'entrer dans le réseau."><span class="yg-box-t">Input Image</span><span class="yg-box-d">448×448×3</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="24 Convolutions" data-def="Suite de 24 couches de convolution (inspirées de GoogLeNet) et de 4 couches de max-pooling qui extraient progressivement les caractéristiques visuelles de l'image."><span class="yg-box-t">24 Convolutions</span><span class="yg-box-d">+ 4 Max Pooling</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="2 Fully Connected" data-def="Deux couches entièrement connectées qui transforment les cartes de caractéristiques en un vecteur de prédictions finales."><span class="yg-box-t">2 Fully Connected</span><span class="yg-box-d">couches denses</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Output Tensor" data-def="Tenseur de sortie encodant, pour chaque cellule de la grille 7×7, les coordonnées des boîtes et les probabilités de classe."><span class="yg-box-t">Output Tensor</span><span class="yg-box-d">7×7×30</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Prédictions finales" data-def="Coordonnées des boîtes englobantes (x, y, largeur, hauteur, confiance) et distribution de probabilité sur les classes, prédites pour chaque cellule de la grille."><span class="yg-box-t">Prédictions finales</span><span class="yg-box-d">Boxes (B×5) + Classes (C)</span></button>
+        </div>
+          <p class="yg-caption"><strong>Innovations clés</strong> — Détection en une seule passe · Régression directe des boîtes · Grille 7×7 · Classes + coordonnées simultanées · Temps réel</p>
+        </div>
+      </div>
+
+      <div class="yg-row yg-c2">
+        <div class="yg-label">
+          <span class="yg-badge">YOLOv2 (2017)</span>
+          <p class="yg-tagline">Darknet-19 + Anchor Boxes + Multi-scale Training</p>
+        </div>
+        <div class="yg-body">
+          <div class="yg-chain">
+          <button type="button" class="yg-box" data-term="Input Image" data-def="Image brute redimensionnée à 416×416 avant d'entrer dans le réseau."><span class="yg-box-t">Input Image</span><span class="yg-box-d">416×416×3</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Darknet-19" data-def="Réseau convolutif de 19 couches, plus léger que ses prédécesseurs, utilisé pour extraire les caractéristiques."><span class="yg-box-t">Darknet-19</span><span class="yg-box-d">backbone</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Passthrough Layer" data-def="Réinjecte les caractéristiques haute résolution d'une couche antérieure (26×26) pour améliorer la détection des petits objets."><span class="yg-box-t">Passthrough Layer</span><span class="yg-box-d">feature map 26×26</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Detection Layers" data-def="Couches finales qui convertissent les caractéristiques extraites en prédictions de boîtes et de classes."><span class="yg-box-t">Detection Layers</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Anchor Boxes" data-def="Boîtes de référence prédéfinies (obtenues par clustering) que le modèle ajuste plutôt que de prédire les coordonnées brutes."><span class="yg-box-t">Anchor Boxes</span><span class="yg-box-d">5 par échelle</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Multi-scale Training" data-def="Technique d'entraînement qui fait varier la résolution d'entrée (320 à 608 px) pour rendre le modèle robuste à différentes échelles."><span class="yg-box-t">Multi-scale Training</span><span class="yg-box-d">320 – 608 px</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Prédictions finales" data-def="Sortie finale combinant les boîtes englobantes prédites et leurs probabilités de classe associées."><span class="yg-box-t">Prédictions finales</span><span class="yg-box-d">Boxes + Classes</span></button>
+        </div>
+          <p class="yg-caption"><strong>Innovations clés</strong> — Darknet-19 · Batch Normalization · Anchor Boxes · Passthrough Layer · Multi-scale Training · High-Res Classifier · YOLO9000 (&gt;9000 classes)</p>
+        </div>
+      </div>
+
+      <div class="yg-row yg-c3">
+        <div class="yg-label">
+          <span class="yg-badge">YOLOv3 (2018)</span>
+          <p class="yg-tagline">Darknet-53 + Residual Blocks + FPN</p>
+        </div>
+        <div class="yg-body">
+          <div class="yg-chain">
+          <button type="button" class="yg-box" data-term="Input Image" data-def="Image brute redimensionnée à 416² ou 608² avant d'entrer dans le réseau."><span class="yg-box-t">Input Image</span><span class="yg-box-d">416² ou 608²</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Darknet-53" data-def="Réseau convolutif profond de 53 couches avec connexions résiduelles, backbone principal de YOLOv3."><span class="yg-box-t">Darknet-53</span><span class="yg-box-d">backbone</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Residual Blocks" data-def="Blocs résiduels (skip connections) qui facilitent l'entraînement de réseaux profonds en évitant la disparition du gradient."><span class="yg-box-t">Residual Blocks</span><span class="yg-box-d">1×, 2×, 8×, 8×</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="FPN" data-def="Feature Pyramid Network : combine les caractéristiques de différentes profondeurs (top-down + latéral) pour détecter des objets de toutes tailles."><span class="yg-box-t">FPN</span><span class="yg-box-d">top-down + latéral</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Detection Heads" data-def="Têtes de détection convolutives appliquées à plusieurs échelles pour produire les prédictions finales."><span class="yg-box-t">Detection Heads</span><span class="yg-box-d">convolutives</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Sorties multi-échelles" data-def="Trois grilles de sortie (13×13, 26×26, 52×52) dédiées respectivement aux grands, moyens et petits objets."><span class="yg-box-t">Sorties multi-échelles</span><span class="yg-box-d">13² · 26² · 52²</span></button>
+        </div>
+          <p class="yg-caption"><strong>Innovations clés</strong> — Darknet-53 · Residual Connections · Détection multi-échelle · Feature Pyramid Network · Logistic Classifier · Petits objets améliorés</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="concept-detail reveal-item" id="ygDetail1">
+      <div class="concept-detail-empty"></div>
+      <div class="concept-detail-card">
+        <h4></h4>
+        <div class="cd-row"><span class="cd-tag">Définition</span><p></p></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======================= SLIDE — YOLOv4 → YOLOv7 ======================= -->
+<section class="slide" data-title="YOLOv4 → YOLOv7">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">4-Architectures YOLO</p>
+    <h2 class="slide-title reveal-item">Évolution architecturale de YOLOv4 à YOLOv7</h2>
+
+    <div class="yg-rows reveal-stagger">
+
+      <div class="yg-row yg-c1">
+        <div class="yg-label">
+          <span class="yg-badge">YOLOv4 (2020)</span>
+          <p class="yg-tagline">CSP + SPP + PANet · Mosaic + CIoU</p>
+        </div>
+        <div class="yg-body">
+          <div class="yg-chain">
+          <button type="button" class="yg-box" data-term="Input Image" data-def="Image brute redimensionnée à 640×640 avant d'entrer dans le réseau."><span class="yg-box-t">Input Image</span><span class="yg-box-d">640×640</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="CSPDarknet53" data-def="Variante de Darknet-53 intégrant des connexions CSP qui réduisent la redondance de calcul tout en préservant la précision."><span class="yg-box-t">CSPDarknet53</span><span class="yg-box-d">backbone</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="SPP" data-def="Spatial Pyramid Pooling : agrège des caractéristiques à plusieurs échelles de réception pour capturer un contexte plus large."><span class="yg-box-t">SPP</span><span class="yg-box-d">Spatial Pyramid Pooling</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="PANet" data-def="Path Aggregation Network : renforce la propagation des caractéristiques du bas vers le haut, en complément du FPN, pour mieux localiser les objets."><span class="yg-box-t">PANet</span><span class="yg-box-d">Path Aggregation</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Detection Head" data-def="Tête finale qui produit les boîtes, scores d'objectivité et classes à partir des caractéristiques fusionnées."><span class="yg-box-t">Detection Head</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Sorties" data-def="Trois grilles de sortie (13×13, 26×26, 52×52) dédiées respectivement aux grands, moyens et petits objets."><span class="yg-box-t">Sorties</span><span class="yg-box-d">13² · 26² · 52²</span></button>
+        </div>
+          <p class="yg-caption"><strong>Innovations clés</strong> — CSPDarknet53 · SPP · PANet · Mosaic Data Augmentation · CIoU Loss Function</p>
+        </div>
+      </div>
+
+      <div class="yg-row yg-c2">
+        <div class="yg-label">
+          <span class="yg-badge">YOLOv5 (2020)</span>
+          <p class="yg-tagline">Focus + SPPF + AutoAnchor</p>
+        </div>
+        <div class="yg-body">
+          <div class="yg-chain">
+          <button type="button" class="yg-box" data-term="Input Image" data-def="Image brute redimensionnée à 640×640 avant d'entrer dans le réseau."><span class="yg-box-t">Input Image</span><span class="yg-box-d">640×640</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Focus Layer" data-def="Découpe l'image en sous-tuiles puis les concatène, réduisant la taille spatiale tout en conservant l'information avant le backbone."><span class="yg-box-t">Focus Layer</span><span class="yg-box-d">slice + concat</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="CSPDarknet" data-def="Backbone basé sur l'architecture CSP, optimisé pour un bon compromis vitesse / précision."><span class="yg-box-t">CSPDarknet</span><span class="yg-box-d">backbone</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="SPPF" data-def="Version accélérée du SPP qui enchaîne des max-poolings de même taille au lieu de tailles multiples en parallèle."><span class="yg-box-t">SPPF</span><span class="yg-box-d">SPP rapide</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="PANet" data-def="Path Aggregation Network : renforce la propagation des caractéristiques du bas vers le haut, en complément du FPN."><span class="yg-box-t">PANet</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Detection Head" data-def="Tête finale qui produit les boîtes, scores d'objectivité et classes à partir des caractéristiques fusionnées."><span class="yg-box-t">Detection Head</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Sorties" data-def="Trois grilles de sortie (13×13, 26×26, 52×52) dédiées respectivement aux grands, moyens et petits objets."><span class="yg-box-t">Sorties</span><span class="yg-box-d">13² · 26² · 52²</span></button>
+        </div>
+          <p class="yg-caption"><strong>Innovations clés</strong> — Focus Layer · Architecture CSP · SPPF · AutoAnchor · Implémentation PyTorch native</p>
+        </div>
+      </div>
+
+      <div class="yg-row yg-c3">
+        <div class="yg-label">
+          <span class="yg-badge">YOLOv6 (2022)</span>
+          <p class="yg-tagline">EfficientRep + Rep-PAN · Anchor-Free</p>
+        </div>
+        <div class="yg-body">
+          <div class="yg-chain">
+          <button type="button" class="yg-box" data-term="Input Image" data-def="Image brute redimensionnée à 640×640 avant d'entrer dans le réseau."><span class="yg-box-t">Input Image</span><span class="yg-box-d">640×640</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="EfficientRep" data-def="Backbone re-paramétrable (style RepVGG) : structure multi-branches à l'entraînement, fusionnée en une seule branche à l'inférence."><span class="yg-box-t">EfficientRep</span><span class="yg-box-d">backbone re-paramétré</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Rep-PAN" data-def="Variante re-paramétrée du PANet, optimisée pour réduire la latence tout en conservant une bonne agrégation multi-échelle."><span class="yg-box-t">Rep-PAN</span><span class="yg-box-d">PAN re-paramétré</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Decoupled Head" data-def="Tête de détection qui sépare les branches de classification et de régression, sans ancres prédéfinies (anchor-free)."><span class="yg-box-t">Decoupled Head</span><span class="yg-box-d">anchor-free</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Sorties" data-def="Trois grilles de sortie (13×13, 26×26, 52×52) dédiées respectivement aux grands, moyens et petits objets."><span class="yg-box-t">Sorties</span><span class="yg-box-d">13² · 26² · 52²</span></button>
+        </div>
+          <p class="yg-caption"><strong>Innovations clés</strong> — EfficientRep Backbone · Rep-PAN · Decoupled Head · Anchor-Free · Optimisation industrielle (latence, FLOPs)</p>
+        </div>
+      </div>
+
+      <div class="yg-row yg-c4">
+        <div class="yg-label">
+          <span class="yg-badge">YOLOv7 (2022)</span>
+          <p class="yg-tagline">E-ELAN + SPPCSPC · Bag-of-Freebies</p>
+        </div>
+        <div class="yg-body">
+          <div class="yg-chain">
+          <button type="button" class="yg-box" data-term="Input Image" data-def="Image brute redimensionnée à 640×640 avant d'entrer dans le réseau."><span class="yg-box-t">Input Image</span><span class="yg-box-d">640×640</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="E-ELAN" data-def="Extended-ELAN : contrôle le chemin du gradient pour un apprentissage plus efficace sans complexifier l'inférence."><span class="yg-box-t">E-ELAN</span><span class="yg-box-d">backbone étendu</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="SPPCSPC" data-def="Combinaison de SPP et de connexions CSP, offrant un pooling multi-échelle rapide avec un flux de gradient optimisé."><span class="yg-box-t">SPPCSPC</span><span class="yg-box-d">SPP rapide + CSP</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="PANet" data-def="Path Aggregation Network : renforce la propagation des caractéristiques du bas vers le haut."><span class="yg-box-t">PANet</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Auxiliary Head" data-def="Tête de supervision auxiliaire utilisée uniquement pendant l'entraînement pour renforcer l'apprentissage des couches intermédiaires."><span class="yg-box-t">Auxiliary Head</span><span class="yg-box-d">supervision profonde</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Lead Head" data-def="Tête principale qui produit les prédictions finales utilisées à l'inférence."><span class="yg-box-t">Lead Head</span><span class="yg-box-d">prédiction finale</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Sorties" data-def="Trois grilles de sortie (13×13, 26×26, 52×52) dédiées respectivement aux grands, moyens et petits objets."><span class="yg-box-t">Sorties</span><span class="yg-box-d">13² · 26² · 52²</span></button>
+        </div>
+          <p class="yg-caption"><strong>Innovations clés</strong> — E-ELAN · SPPCSPC · Trainable Bag-of-Freebies · Auxiliary Head · Model Scaling (profondeur, largeur, résolution)</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="concept-detail reveal-item" id="ygDetail2">
+      <div class="concept-detail-empty"><span> </span></div>
+      <div class="concept-detail-card">
+        <h4></h4>
+        <div class="cd-row"><span class="cd-tag">Définition</span><p></p></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ======================= SLIDE — YOLOv8 → YOLOv11 ======================= -->
+<section class="slide" data-title="YOLOv8 → YOLOv11">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">4-Architectures YOLO</p>
+    <h2 class="slide-title reveal-item">Évolution architecturale de YOLOv8 à YOLOv11</h2>
+    <p class="soft-note reveal-item" style="font-size:12.5px; margin:-20px 0 20px; display:block;"> </p>
+
+    <div class="yg-rows reveal-stagger">
+
+      <div class="yg-row yg-c1">
+        <div class="yg-label">
+          <span class="yg-badge">YOLOv8 (2023)</span>
+          <p class="yg-tagline">Anchor-Free + C2f + Decoupled Head</p>
+        </div>
+        <div class="yg-body">
+          <div class="yg-chain">
+          <button type="button" class="yg-box" data-term="Input Image" data-def="Image brute redimensionnée à 640×640 avant d'entrer dans le réseau."><span class="yg-box-t">Input Image</span><span class="yg-box-d">640×640</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Backbone C2f" data-def="Backbone construit sur des modules C2f (Cross Stage Partial) qui divisent puis fusionnent les flux de caractéristiques pour réduire le coût de calcul."><span class="yg-box-t">Backbone C2f</span><span class="yg-box-d">CSP-based</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="SPPF" data-def="Version accélérée du SPP qui enchaîne des max-poolings de même taille au lieu de tailles multiples en parallèle."><span class="yg-box-t">SPPF</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="PAN-FPN Neck" data-def="Cou combinant FPN et PANet pour fusionner les caractéristiques à plusieurs échelles avant la détection."><span class="yg-box-t">PAN-FPN Neck</span><span class="yg-box-d">agrégation</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Decoupled Head" data-def="Tête sans ancres, avec branches séparées pour la classification et la régression des boîtes."><span class="yg-box-t">Decoupled Head</span><span class="yg-box-d">anchor-free</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Sorties" data-def="Trois cartes de sortie (80×80, 40×40, 20×20) dédiées respectivement aux petits, moyens et grands objets."><span class="yg-box-t">Sorties</span><span class="yg-box-d">80² · 40² · 20²</span></button>
+        </div>
+          <p class="yg-caption"><strong>Innovations clés</strong> — Anchor-Free Detection · Modules C2f · Decoupled Head · SPPF · Pipeline unifié détection/segmentation/classification</p>
+        </div>
+      </div>
+
+      <div class="yg-row yg-c2">
+        <div class="yg-label">
+          <span class="yg-badge">YOLOv9 (2024)</span>
+          <p class="yg-tagline">GELAN + PGI</p>
+        </div>
+        <div class="yg-body">
+          <div class="yg-chain">
+          <button type="button" class="yg-box" data-term="Input Image" data-def="Image brute redimensionnée à 640×640 avant d'entrer dans le réseau."><span class="yg-box-t">Input Image</span><span class="yg-box-d">640×640</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="GELAN Backbone" data-def="Generalized ELAN : généralise CSPNet et ELAN pour un meilleur compromis paramètres / précision."><span class="yg-box-t">GELAN Backbone</span><span class="yg-box-d">agrégation généralisée</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="PGI" data-def="Programmable Gradient Information : fournit une information de gradient fiable aux couches profondes, réduisant la perte d'information lors de la propagation."><span class="yg-box-t">PGI</span><span class="yg-box-d">Programmable Gradient Info</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Neck amélioré" data-def="Cou amélioré qui fusionne plus efficacement les caractéristiques multi-échelles issues du backbone GELAN."><span class="yg-box-t">Neck amélioré</span><span class="yg-box-d">agrégation renforcée</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Detection Head" data-def="Tête de détection à branches séparées (classification / régression)."><span class="yg-box-t">Detection Head</span><span class="yg-box-d">decoupled</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Sorties" data-def="Sorties multi-échelles issues de la pyramide de caractéristiques (P3, P4, P5)."><span class="yg-box-t">Sorties</span><span class="yg-box-d">P3 · P4 · P5</span></button>
+        </div>
+          <p class="yg-caption"><strong>Innovations clés</strong> — GELAN · PGI (Programmable Gradient Information) · Meilleure propagation du gradient · Flux d'information optimisé · Meilleur compromis précision/efficacité</p>
+        </div>
+      </div>
+
+      <div class="yg-row yg-c3">
+        <div class="yg-label">
+          <span class="yg-badge">YOLOv10 (2024)</span>
+          <p class="yg-tagline">End-to-End + NMS-Free</p>
+        </div>
+        <div class="yg-body">
+          <div class="yg-chain">
+          <button type="button" class="yg-box" data-term="Input Image" data-def="Image brute redimensionnée à 640×640 avant d'entrer dans le réseau."><span class="yg-box-t">Input Image</span><span class="yg-box-d">640×640</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Backbone efficace" data-def="Backbone conçu pour minimiser la latence et le nombre de paramètres tout en maintenant la précision."><span class="yg-box-t">Backbone efficace</span><span class="yg-box-d">design léger</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Neck optimisé" data-def="Module de fusion de caractéristiques optimisé pour réduire le coût de calcul sans perte de précision."><span class="yg-box-t">Neck optimisé</span><span class="yg-box-d">fusion efficace</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="One-to-One Head" data-def="Tête d'assignation un-à-un qui associe une seule prédiction par objet, supprimant le besoin de NMS à l'inférence."><span class="yg-box-t">One-to-One Head</span><span class="yg-box-d">NMS-free</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Pipeline End-to-End" data-def="Pipeline entraîné et exécuté de bout en bout, sans étape de post-traitement séparée comme le NMS."><span class="yg-box-t">Pipeline End-to-End</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Sorties" data-def="Sorties multi-échelles issues de la pyramide de caractéristiques (P3, P4, P5)."><span class="yg-box-t">Sorties</span><span class="yg-box-d">P3 · P4 · P5</span></button>
+        </div>
+          <p class="yg-caption"><strong>Innovations clés</strong> — End-to-End Detection · NMS-Free Inference · One-to-One Assignment · Conception holistique · Faible latence</p>
+        </div>
+      </div>
+
+      <div class="yg-row yg-c4">
+        <div class="yg-label">
+          <span class="yg-badge">YOLOv11 (2024)</span>
+          <p class="yg-tagline">Backbone amélioré + Fusion améliorée</p>
+        </div>
+        <div class="yg-body">
+          <div class="yg-chain">
+          <button type="button" class="yg-box" data-term="Input Image" data-def="Image brute redimensionnée à 640×640 avant d'entrer dans le réseau."><span class="yg-box-t">Input Image</span><span class="yg-box-d">640×640</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Backbone amélioré" data-def="Backbone amélioré offrant une extraction de caractéristiques plus riche pour la détection."><span class="yg-box-t">Backbone amélioré</span><span class="yg-box-d">extraction renforcée</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Fusion améliorée" data-def="Fusion de caractéristiques plus efficace entre les différentes échelles du réseau."><span class="yg-box-t">Fusion améliorée</span><span class="yg-box-d">features</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Neck optimisé" data-def="Cou de fusion perfectionné qui combine plus efficacement les cartes de caractéristiques multi-échelles."><span class="yg-box-t">Neck optimisé</span><span class="yg-box-d">agrégation efficace</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Head affiné" data-def="Tête de détection affinée pour une meilleure précision de classification et de régression."><span class="yg-box-t">Head affiné</span><span class="yg-box-d">decoupled</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Sorties" data-def="Trois cartes de sortie (80×80, 40×40, 20×20) dédiées respectivement aux petits, moyens et grands objets."><span class="yg-box-t">Sorties</span><span class="yg-box-d">80² · 40² · 20²</span></button>
+        </div>
+          <p class="yg-caption"><strong>Innovations clés</strong> — Backbone amélioré · Fusion de caractéristiques plus efficace · Head optimisé · Meilleure détection des petits objets · Coût computationnel réduit</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="concept-detail reveal-item" id="ygDetail3">
+      <div class="concept-detail-empty"><span> </span></div>
+      <div class="concept-detail-card">
+        <h4></h4>
+        <div class="cd-row"><span class="cd-tag">Définition</span><p></p></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+ 
+
+
+
+<!-- ======================= SLIDE — YOLOv12 → YOLO26 ======================= -->
+<section class="slide" data-title="YOLOv12 → YOLO26">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">4-Architectures YOLO</p>
+    <h2 class="slide-title reveal-item">Évolution architecturale de YOLOv12 à YOLO26</h2>
+    <p class="soft-note reveal-item" style="font-size:12.5px; margin:-20px 0 20px; display:block;"> </p>
+
+    <div class="yg-rows reveal-stagger">
+
+      <div class="yg-row yg-c1">
+        <div class="yg-label">
+          <span class="yg-badge">YOLOv12 (2024)</span>
+          <p class="yg-tagline">Backbone optimisé + Fusion efficace</p>
+        </div>
+        <div class="yg-body">
+          <div class="yg-chain">
+          <button type="button" class="yg-box" data-term="Input Image" data-def="Image brute redimensionnée à 640×640 avant d'entrer dans le réseau."><span class="yg-box-t">Input Image</span><span class="yg-box-d">640×640</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Backbone optimisé" data-def="Backbone optimisé (variante CSP) offrant un meilleur compromis vitesse / précision."><span class="yg-box-t">Backbone optimisé</span><span class="yg-box-d">variante CSP</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="C2f / ELAN" data-def="Blocs de type C2f ou ELAN qui extraient des caractéristiques riches avec un coût de calcul réduit."><span class="yg-box-t">C2f / ELAN</span><span class="yg-box-d">extraction features</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Fusion bi-directionnelle" data-def="Fusion bi-directionnelle des caractéristiques entre les différentes échelles du réseau."><span class="yg-box-t">Fusion bi-directionnelle</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Neck PAN-FPN" data-def="Partie du réseau (PAN-FPN) qui agrège les caractéristiques du backbone avant la tête de détection."><span class="yg-box-t">Neck PAN-FPN</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Head anchor-free" data-def="Tête de détection sans ancres, à branches séparées (classification / régression)."><span class="yg-box-t">Head anchor-free</span><span class="yg-box-d">decoupled</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Sorties" data-def="Sorties multi-échelles issues de la pyramide de caractéristiques (P3, P4, P5)."><span class="yg-box-t">Sorties</span><span class="yg-box-d">P3 · P4 · P5</span></button>
+        </div>
+          <p class="yg-caption"><strong>Innovations clés</strong> — Backbone optimisé · C2f amélioré · Fusion bi-directionnelle plus efficace · Meilleur compromis précision/vitesse · Petits objets<span class="yg-struct">Structure interne — C2f : Conv → Split → Bottleneck ×n → Concat → Conv  |  SPPF : Conv → MaxPool 5/9/13 → Concat → Conv</span></p>
+        </div>
+      </div>
+
+      <div class="yg-row yg-c2">
+        <div class="yg-label">
+          <span class="yg-badge">YOLOv13 (2024)</span>
+          <p class="yg-tagline">Backbone amélioré + Cross-stage Aggregation</p>
+        </div>
+        <div class="yg-body">
+          <div class="yg-chain">
+          <button type="button" class="yg-box" data-term="Input Image" data-def="Image brute redimensionnée à 640×640 avant d'entrer dans le réseau."><span class="yg-box-t">Input Image</span><span class="yg-box-d">640×640</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Backbone amélioré" data-def="Backbone nouvelle génération basé sur une architecture CSP améliorée, offrant une meilleure représentation des caractéristiques."><span class="yg-box-t">Backbone amélioré</span><span class="yg-box-d">CSP nouvelle génération</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="CSFA" data-def="Cross-stage Feature Aggregation : agrège les caractéristiques entre plusieurs étages du réseau pour une meilleure propagation de l'information."><span class="yg-box-t">CSFA</span><span class="yg-box-d">agrégation inter-étages</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Neck amélioré" data-def="Cou PAN-FPN enrichi par le mécanisme CSFA pour une fusion multi-échelle plus efficace."><span class="yg-box-t">Neck amélioré</span><span class="yg-box-d">PAN-FPN + CSFA</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Head anchor-free" data-def="Tête de détection sans ancres, à branches séparées (classification / régression)."><span class="yg-box-t">Head anchor-free</span><span class="yg-box-d">decoupled</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Sorties" data-def="Sorties multi-échelles issues de la pyramide de caractéristiques (P3, P4, P5)."><span class="yg-box-t">Sorties</span><span class="yg-box-d">P3 · P4 · P5</span></button>
+        </div>
+          <p class="yg-caption"><strong>Innovations clés</strong> — Backbone nouvelle génération · Cross-stage Feature Aggregation · Meilleure propagation de l'information · Complexité réduite · Performances temps réel<span class="yg-struct">Structure interne — CSFA : P5 → P4 (+) → P3 (+)  |  Unité d'agrégation : Conv 1×1 → Depthwise Conv 3×3 → Conv 1×1</span></p>
+        </div>
+      </div>
+
+      <div class="yg-row yg-c3">
+        <div class="yg-label">
+          <span class="yg-badge">YOLO26 (2025+)</span>
+          <p class="yg-tagline">End-to-End + Dual Head + NMS-Free + MuSGD + STAL</p>
+        </div>
+        <div class="yg-body">
+          <div class="yg-chain">
+          <button type="button" class="yg-box" data-term="Input Image" data-def="Image brute redimensionnée à 640×640 avant d'entrer dans le réseau."><span class="yg-box-t">Input Image</span><span class="yg-box-d">640×640</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Backbone efficace" data-def="Backbone de type UltraNet / CSP conçu pour un excellent compromis vitesse / précision."><span class="yg-box-t">Backbone efficace</span><span class="yg-box-d">UltraNet / CSP-like</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Fusion avancée" data-def="Agrégation avancée des caractéristiques extraites par le backbone avant la détection."><span class="yg-box-t">Fusion avancée</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Dual Head" data-def="Architecture à deux têtes : une tête one-to-one utilisée à l'inférence (sans NMS) et une tête one-to-many utilisée à l'entraînement."><span class="yg-box-t">Dual Head</span><span class="yg-box-d">1-to-1 + 1-to-many</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Inférence End-to-End" data-def="Inférence native de bout en bout, sans étape de suppression non maximale (NMS), pour une latence réduite."><span class="yg-box-t">Inférence End-to-End</span><span class="yg-box-d">NMS-free natif</span></button>
+          <span class="yg-arrow">→</span>
+          <button type="button" class="yg-box" data-term="Sorties" data-def="Sorties multi-échelles issues de la pyramide de caractéristiques (P3, P4, P5)."><span class="yg-box-t">Sorties</span><span class="yg-box-d">P3 · P4 · P5</span></button>
+        </div>
+          <p class="yg-caption"><strong>Innovations clés</strong> — Détection End-to-End native · Architecture Dual Head · Inference NMS-Free · Régression sans DFL · Optimiseur MuSGD · Progressive Loss · STAL · Pipeline unifié (détection, segmentation, pose, OBB)<span class="yg-struct">Structure interne — Dual Head : Shared Features → Head 1-to-1 / 1-to-many → Loss duale → Backprop (MuSGD + Progressive Loss)</span></p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="concept-detail reveal-item" id="ygDetail4">
+      <div class="concept-detail-empty"><span> </span></div>
+      <div class="concept-detail-card">
+        <h4></h4>
+        <div class="cd-row"><span class="cd-tag">Définition</span><p></p></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+  </main>
+
+
+  
+
+  <!-- Points de navigation rapide (dots) -->
+  <div class="dots" id="dots" aria-hidden="true"></div>
+<!-- Flèches de navigation — milieu gauche / droite -->
+<button class="arrow-nav arrow-nav-left" id="btn-prev" title="Précédent (←)" aria-label="Diapositive précédente">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+<button class="arrow-nav arrow-nav-right" id="btn-next" title="Suivant (→)" aria-label="Diapositive suivante">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<!-- Footer — numéro de page centré en bas -->
+<footer class="controls">
+  <div class="slide-counter">
+    <span id="counter-current">01</span><span class="counter-sep">/</span><span id="counter-total">05</span>
+  </div>
+</footer>
+  <!-- ===================== MODAL — DÉTAIL D'UN DÉFI ===================== -->
+  <div class="challenge-modal-overlay" id="challengeModalOverlay">
+    <div class="challenge-modal" role="dialog" aria-modal="true" aria-labelledby="challengeModalTitle">
+
+      <button class="challenge-modal-close text-btn" id="challengeModalClose" aria-label="Fermer">
+        Fermer
+      </button>
+
+      <div class="challenge-modal-media" id="challengeModalMedia">
+        <img id="challengeModalImage" src="" alt="">
+        <!-- Affiché automatiquement si l'image ne charge pas encore -->
+        <div class="challenge-modal-fallback" id="challengeModalFallback">
+          
+        </div>
+      </div>
+
+      <div class="challenge-modal-body">
+        <h3 id="challengeModalTitle"></h3>
+        <p id="challengeModalDesc"></p>
+        <span class="challenge-modal-caption" id="challengeModalCaption"></span>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  
+
+
+
+
+
+<!-- ======================= SLIDE — Tableau comparatif ======================= -->
+
+
+<!-- ======================= SLIDE —Tableau comparatif ======================= -->
+<section class="slide" data-title="Tableau comparatif">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">4-Architectures YOLO</p>
+    <h2 class="slide-title reveal-item">Tableau comparatif — Évolution de la famille YOLO</h2>
+
+    <div class="tc-wrap reveal-item">
+      <table class="tc-table">
+        <thead>
+          <tr>
+            <th>Version</th>
+            <th>Innovation</th>
+            <th>Applications</th>
+            <th>Point fort</th>
+            <th>Limites</th>
+            <th>Quand la choisir ?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tc-version"><span class="tc-version-dot"></span>YOLOv3</span></td>
+            <td class="tc-innovation">Détection multi-échelle</td>
+            <td>Surveillance, trafic, drones</td>
+            <td><span class="tc-strength">Bon compromis vitesse/précision</span></td>
+            <td class="tc-limit">Difficulté sur petits objets</td>
+            <td class="tc-when">Si les ressources matérielles sont limitées.</td>
+          </tr>
+          <tr>
+            <td><span class="tc-version"><span class="tc-version-dot"></span>YOLOv4–v5</span></td>
+            <td class="tc-innovation">CSP, PANet, optimisations BoF/BoS</td>
+            <td>Industrie, robotique, inspection</td>
+            <td><span class="tc-strength">Très bon équilibre précision/vitesse</span></td>
+            <td class="tc-limit">Toujours Anchor-Based</td>
+            <td class="tc-when">Pour une application industrielle fiable.</td>
+          </tr>
+          <tr>
+            <td><span class="tc-version"><span class="tc-version-dot"></span>YOLOv6–v7</span></td>
+            <td class="tc-innovation">Optimisation industrielle, E-ELAN</td>
+            <td>Edge AI, temps réel</td>
+            <td><span class="tc-strength">Très faible latence</span></td>
+            <td class="tc-limit">Architecture plus complexe</td>
+            <td class="tc-when">Si la vitesse est le critère principal.</td>
+          </tr>
+          <tr>
+            <td><span class="tc-version"><span class="tc-version-dot"></span>YOLOv8</span></td>
+            <td class="tc-innovation">Anchor-Free, Decoupled Head</td>
+            <td>Applications généralistes</td>
+            <td><span class="tc-strength">Simplicité, polyvalence</span></td>
+            <td class="tc-limit">Coût plus élevé sur grandes variantes</td>
+            <td class="tc-when">Pour un nouveau projet polyvalent.</td>
+          </tr>
+          <tr>
+            <td><span class="tc-version"><span class="tc-version-dot"></span>YOLOv9</span></td>
+            <td class="tc-innovation">PGI, GELAN</td>
+            <td>Vision industrielle</td>
+            <td><span class="tc-strength">Meilleure précision</span></td>
+            <td class="tc-limit">Entraînement plus complexe</td>
+            <td class="tc-when">Si la précision est prioritaire.</td>
+          </tr>
+          <tr>
+            <td><span class="tc-version tc-nmsfree"><span class="tc-version-dot"></span>YOLOv10<span class="tc-badge">NMS-Free</span></span></td>
+            <td class="tc-innovation">End-to-End, NMS-Free</td>
+            <td>Robotique, Edge AI</td>
+            <td><span class="tc-strength">Inférence très rapide</span></td>
+            <td class="tc-limit">Adoption récente</td>
+            <td class="tc-when">Pour une inférence End-to-End sans NMS.</td>
+          </tr>
+          <tr>
+            <td><span class="tc-version"><span class="tc-version-dot"></span>YOLOv11</span></td>
+            <td class="tc-innovation">Optimisations architecturales</td>
+            <td>Applications généralistes</td>
+            <td><span class="tc-strength">Excellent compromis</span></td>
+            <td class="tc-limit">Gain modéré par rapport à v10</td>
+            <td class="tc-when">Pour un excellent compromis général.</td>
+          </tr>
+          <tr>
+            <td><span class="tc-version"><span class="tc-version-dot"></span>YOLOv12</span></td>
+            <td class="tc-innovation">Attention améliorée</td>
+            <td>Robotique avancée</td>
+            <td><span class="tc-strength">Robustesse accrue</span></td>
+            <td class="tc-limit">Peu de benchmarks</td>
+            <td class="tc-when">Pour des scénarios complexes nécessitant plus de robustesse.</td>
+          </tr>
+          <tr>
+            <td><span class="tc-version"><span class="tc-version-dot"></span>YOLOv13</span></td>
+            <td class="tc-innovation">Optimisations avancées</td>
+            <td>Smart City, sécurité</td>
+            <td><span class="tc-strength">Haute précision</span></td>
+            <td class="tc-limit">Besoin de ressources</td>
+            <td class="tc-when">Pour des scènes très denses avec de nombreux objets.</td>
+          </tr>
+          <tr>
+            <td><span class="tc-version tc-nmsfree"><span class="tc-version-dot"></span>YOLO26<span class="tc-badge">NMS-Free</span></span></td>
+            <td class="tc-innovation">ProgLoss, STAL, NMS-Free</td>
+            <td>Recherche, benchmarking</td>
+            <td><span class="tc-strength">Latence minimale</span></td>
+            <td class="tc-limit">Encore expérimental</td>
+            <td class="tc-when">Pour explorer les approches de recherche les plus récentes.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tc-legend">
+      <span><span class="tc-sw tc-cyan"></span>Point fort dominant</span>
+      <span><span class="tc-sw tc-red"></span>Architecture NMS-Free (YOLOv10 · YOLO26)</span>
+    </div>
+
+  </div>
+</section>
+  
+<!-- ======================= SLIDE — Platforme ======================= -->
+<section class="slide" data-title="platforma">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow"></p>
+    <h2 class="platforma-title">Présentation de la plateforme</h2>
+
+    <p class="platforma-intro">
+      Notre plateforme est une application web de benchmark des modèles YOLO
+      permettant de comparer automatiquement plusieurs versions
+      <strong>YOLOv3</strong> à <strong>YOLO26</strong>. Elle exécute l'inférence sur une même
+      image et fournit des indicateurs de performance tels que le temps
+      d'inférence, les FPS, le nombre d'objets détectés, la confiance moyenne
+      et les images annotées, facilitant ainsi l'évaluation et la comparaison
+      des modèles.
+    </p>
+
+    <div class="platforma-grid">
+
+      <div class="platforma-card">
+        <h3 class="platforma-card-title">
+          <span class="platforma-icon"></span> Technologies
+        </h3>
+        <ul class="platforma-list">
+          <li>
+            <span class="platforma-tag">Python</span>
+            <span class="platforma-desc">langage principal de développement</span>
+          </li>
+          <li>
+            <span class="platforma-tag">Flask</span>
+            <span class="platforma-desc">développement du backend et des API REST</span>
+          </li>
+          <li>
+            <span class="platforma-tag">HTML5 / CSS3 / JS</span>
+            <span class="platforma-desc">interface utilisateur</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="platforma-card">
+        <h3 class="platforma-card-title">
+          <span class="platforma-icon"></span> Bibliothèques
+        </h3>
+        <ul class="platforma-list">
+          <li>
+            <span class="platforma-tag">Ultralytics</span>
+            <span class="platforma-desc">chargement et inférence des modèles YOLO</span>
+          </li>
+          <li>
+            <span class="platforma-tag">PyTorch</span>
+            <span class="platforma-desc">exécution des modèles de Deep Learning et accélération GPU</span>
+          </li>
+          <li>
+            <span class="platforma-tag">OpenCV</span>
+            <span class="platforma-desc">traitement des images et visualisation des détections</span>
+          </li>
+          <li>
+            <span class="platforma-tag">NumPy</span>
+            <span class="platforma-desc">calcul numérique et traitement des données</span>
+          </li>
+          <li>
+            <span class="platforma-tag">Werkzeug</span>
+            <span class="platforma-desc">gestion sécurisée des fichiers uploadés</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+.platforma-title {
+  font-size: 1.8rem;
+  margin: 4px 0 18px;
+  color: #1e293b;
+}
+
+.platforma-intro {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #334155;
+  max-width: 900px;
+  margin-bottom: 32px;
+}
+
+.platforma-intro strong {
+  color: #3b82f6;
+}
+
+.platforma-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.platforma-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.platforma-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  margin: 0 0 16px;
+  color: #1e293b;
+}
+
+.platforma-icon {
+  font-size: 1.2rem;
+}
+
+.platforma-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.platforma-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.platforma-list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.platforma-tag {
+  background: #dbeafe;
+  color: #1e40af;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.platforma-desc {
+  font-size: 0.92rem;
+  color: #475569;
+}
+
+@media (max-width: 640px) {
+  .platforma-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+<!-- ======================= SLIDE — Platforme ======================= -->
+<section class="slide" data-title="screendeplatform">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">Interface</p>
+    <h2 class="screens-title">Aperçu de la plateforme</h2>
+
+    <div class="screens-grid">
+
+      <figure class="screen-card">
+        <div class="screen-frame">
+          <img src="Capture.PNG" alt="Interface principale du YOLO Benchmark Comparator : upload d'image et sélection des modèles" />
+        </div>
+        <figcaption class="screen-caption">
+          <span class="screen-caption-title">Configuration</span>
+          <span class="screen-caption-desc">Upload de l'image de test et sélection des modèles à comparer (YOLO26, YOLOX, YOLO-World, YOLOv12, YOLO11…)</span>
+        </figcaption>
+      </figure>
+
+      <figure class="screen-card">
+        <div class="screen-frame">
+          <img src="Capture1.PNG" alt="Liste des modèles YOLO disponibles et réglage du seuil de confiance" />
+        </div>
+        <figcaption class="screen-caption">
+          <span class="screen-caption-title">Sélection des modèles</span>
+          <span class="screen-caption-desc">Choix parmi les versions YOLOv3 à YOLOv6, réglage du seuil de confiance et lancement du benchmark</span>
+        </figcaption>
+      </figure>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+.screens-title {
+  font-size: 1.8rem;
+  margin: 4px 0 24px;
+  color: #1e293b;
+}
+
+.screens-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 28px;
+}
+
+.screen-card {
+  margin: 0;
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.screen-frame {
+  background: #0f172a;
+  padding: 10px;
+}
+
+.screen-frame img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  cursor: zoom-in;
+  transition: transform 0.2s ease;
+}
+
+.screen-frame img:hover {
+  transform: scale(1.02);
+}
+
+.screen-caption {
+  padding: 16px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.screen-caption-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #38bdf8;
+}
+
+.screen-caption-desc {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #94a3b8;
+}
+
+/* Lightbox */
+.screen-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  cursor: zoom-out;
+  padding: 40px;
+}
+
+.screen-lightbox.active {
+  display: flex;
+}
+
+.screen-lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+@media (max-width: 640px) {
+  .screens-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<div class="screen-lightbox" id="screenLightbox">
+  <img id="screenLightboxImg" src="" alt="" />
+</div>
+
+<script>
+document.querySelectorAll('.screen-frame img').forEach(img => {
+  img.addEventListener('click', () => {
+    const lightbox = document.getElementById('screenLightbox');
+    const lightboxImg = document.getElementById('screenLightboxImg');
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightbox.classList.add('active');
+  });
+});
+
+document.getElementById('screenLightbox').addEventListener('click', function() {
+  this.classList.remove('active');
+});
+</script>
+
+<!-- ======================= SLIDE — Architecture de la plateforme ======================= -->
+<section class="slide" data-title="Architecture de la plateforme d'évaluation des modèles YOLO">
+    <div class="slide-inner wide">
+
+        <div class="yb-arch">
+
+            <header class="yb-arch-head">
+                <h2>Architecture de la plateforme d'évaluation</h2>
+                <p>Pipeline complet — de l'image source au dashboard interactif</p>
+            </header>
+
+            <div class="yb-flow">
+
+                <!-- 1. Image -->
+                <div class="yb-node">
+                    <div class="yb-card yb-blue" style="--d:0">
+                        <span class="yb-icon"><i class="fa-solid fa-image"></i></span>
+                        <span class="yb-card-text"><span class="yb-title">Image</span></span>
+                    </div>
+                </div>
+
+                <div class="yb-arrow" style="--d:1"></div>
+
+                <!-- 2. YOLOBenchmark -->
+                <div class="yb-node">
+                    <div class="yb-card yb-blue" style="--d:1">
+                        <span class="yb-icon"><i class="fa-solid fa-gauge-high"></i></span>
+                        <span class="yb-card-text"><span class="yb-title">YOLOBenchmark</span></span>
+                    </div>
+                </div>
+
+                <div class="yb-arrow" style="--d:2"></div>
+
+                <!-- 3. Model Factory -->
+                <div class="yb-node">
+                    <div class="yb-card yb-violet" style="--d:2">
+                        <span class="yb-icon"><i class="fa-solid fa-industry"></i></span>
+                        <span class="yb-card-text"><span class="yb-title">Model Factory</span></span>
+                    </div>
+                </div>
+
+                <!-- Connecteur : split en deux branches -->
+                <div class="yb-connector yb-split" style="--d:3">
+                    <span class="yb-stem-top"></span>
+                    <span class="yb-h-bar"></span>
+                    <span class="yb-branch-line yb-left"></span>
+                    <span class="yb-branch-line yb-right"></span>
+                </div>
+
+                <!-- 4. Deux branches -->
+                <div class="yb-branches">
+
+                    <!-- Branche gauche : Ultralytics -->
+                    <div class="yb-branch">
+                        <div class="yb-card yb-orange" style="--d:4">
+                            <span class="yb-icon"><i class="fa-solid fa-cube"></i></span>
+                            <span class="yb-card-text"><span class="yb-title">Modèles Ultralytics</span></span>
+                        </div>
+
+                        <div class="yb-badges" style="--d:5">
+                            <span class="yb-badge">YOLOv3</span>
+                            <span class="yb-badge">YOLOv5</span>
+                            <span class="yb-badge">YOLOv8</span>
+                            <span class="yb-badge">YOLOv9</span>
+                            <span class="yb-badge">YOLOv10</span>
+                            <span class="yb-badge">YOLO11</span>
+                            <span class="yb-badge">YOLO12</span>
+                            <span class="yb-badge">YOLO26</span>
+                            <span class="yb-badge">YOLO-World</span>
+                        </div>
+
+                        <div class="yb-arrow yb-small" style="--d:6"></div>
+
+                        <div class="yb-card yb-orange yb-outline" style="--d:6">
+                            <span class="yb-icon"><i class="fa-solid fa-plug"></i></span>
+                            <span class="yb-card-text"><span class="yb-title">UltralyticsAdapter</span></span>
+                        </div>
+                    </div>
+
+                    <!-- Branche droite : externes -->
+                    <div class="yb-branch">
+                        <div class="yb-card yb-red" style="--d:4">
+                            <span class="yb-icon"><i class="fa-solid fa-microchip"></i></span>
+                            <span class="yb-card-text"><span class="yb-title">Modèles externes</span></span>
+                        </div>
+
+                        <div class="yb-badges" style="--d:5">
+                            <span class="yb-badge">YOLOv4</span>
+                            <span class="yb-badge">YOLOv6</span>
+                            <span class="yb-badge">YOLOv7</span>
+                            <span class="yb-badge">YOLOX</span>
+                        </div>
+
+                        <div class="yb-arrow yb-small" style="--d:6"></div>
+
+                        <div class="yb-card yb-red yb-outline" style="--d:6">
+                            <span class="yb-icon"><i class="fa-solid fa-plug-circle-bolt"></i></span>
+                            <span class="yb-card-text"><span class="yb-title">Adaptateur spécifique</span></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Connecteur : fusion des deux branches -->
+                <div class="yb-connector yb-merge" style="--d:7">
+                    <span class="yb-branch-line yb-left"></span>
+                    <span class="yb-branch-line yb-right"></span>
+                    <span class="yb-h-bar"></span>
+                    <span class="yb-stem-bottom"></span>
+                </div>
+
+                <!-- 5. Résultats normalisés -->
+                <div class="yb-node">
+                    <div class="yb-card yb-green" style="--d:8">
+                        <span class="yb-icon"><i class="fa-solid fa-database"></i></span>
+                        <span class="yb-card-text">
+                            <span class="yb-title">Résultats normalisés</span>
+                            <span class="yb-subtitle">boxes • scores • classes</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="yb-arrow" style="--d:9"></div>
+
+                <!-- 6. Calcul des métriques -->
+                <div class="yb-node">
+                    <div class="yb-card yb-green" style="--d:9">
+                        <span class="yb-icon"><i class="fa-solid fa-chart-line"></i></span>
+                        <span class="yb-card-text"><span class="yb-title">Calcul des métriques</span></span>
+                    </div>
+                </div>
+
+                <div class="yb-metrics" style="--d:10">
+                    <span class="yb-metric"><i class="fa-solid fa-hourglass-start"></i>Temps de chargement</span>
+                    <span class="yb-metric"><i class="fa-solid fa-bolt"></i>Temps d'inférence</span>
+                    <span class="yb-metric"><i class="fa-solid fa-gauge"></i>FPS</span>
+                    <span class="yb-metric"><i class="fa-solid fa-vector-square"></i>Objets détectés</span>
+                    <span class="yb-metric"><i class="fa-solid fa-percent"></i>Confiance moyenne</span>
+                    <span class="yb-metric"><i class="fa-solid fa-weight-hanging"></i>Taille du modèle</span>
+                </div>
+
+                <div class="yb-arrow" style="--d:11"></div>
+
+                <!-- 7. Dashboard interactif -->
+                <div class="yb-node">
+                    <div class="yb-card yb-violet" style="--d:11">
+                        <span class="yb-icon"><i class="fa-solid fa-chart-column"></i></span>
+                        <span class="yb-card-text"><span class="yb-title">Dashboard interactif</span></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <style>
+            /* ==========================================================================
+               ARCHITECTURE — Plateforme d'évaluation des modèles YOLO
+               HTML/CSS/JS uniquement — scope: .yb-arch
+               ========================================================================== */
+            .yb-arch{
+                --yb-blue:#2563EB;
+                --yb-violet:#7C3AED;
+                --yb-orange:#F97316;
+                --yb-green:#16A34A;
+                --yb-red:#DC2626;
+                --yb-gray:#E5E7EB;
+                --yb-text:#1F2937;
+                --yb-line:#D1D5DB;
+
+                font-family:'Poppins', sans-serif;
+                color:var(--yb-text);
+                background:#ffffff;
+                width:100%;
+                height:100%;
+                box-sizing:border-box;
+                padding:2.2vh 2vw 1vh;
+                display:flex;
+                flex-direction:column;
+                overflow:hidden;
+            }
+            .yb-arch *{ box-sizing:border-box; }
+
+            .yb-arch-head{
+                text-align:center;
+                flex:0 0 auto;
+                margin-bottom:1.2vh;
+                animation:ybFadeIn .6s ease both;
+            }
+            .yb-arch-head h2{
+                margin:0 0 4px;
+                font-size:clamp(1.1rem, 2vw, 1.55rem);
+                font-weight:700;
+                letter-spacing:-.01em;
+            }
+            .yb-arch-head p{
+                margin:0;
+                font-size:clamp(.7rem, 1vw, .85rem);
+                color:#6B7280;
+                font-weight:500;
+            }
+
+            /* ---------- Container principal (architecture-container) ---------- */
+            .architecture-container,
+            .yb-flow{
+                flex:1 1 auto;
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                justify-content:flex-start;
+                gap:0;
+                min-height:0;
+                overflow:hidden;
+            }
+
+            .yb-node{ display:flex; justify-content:center; width:100%; }
+
+            /* ---------- Cartes (arch-card) ---------- */
+            .yb-card{
+                display:inline-flex;
+                align-items:center;
+                gap:12px;
+                background:rgba(255,255,255,0.85);
+                backdrop-filter:blur(6px);
+                -webkit-backdrop-filter:blur(6px);
+                border-radius:18px;
+                padding:10px 20px;
+                box-shadow:0 2px 8px rgba(17,24,39,.06), 0 1px 2px rgba(17,24,39,.04);
+                border:1px solid rgba(229,231,235,.8);
+                border-left:4px solid var(--card-color, var(--yb-blue));
+                transition:transform .25s ease, box-shadow .25s ease;
+                opacity:0;
+                animation:ybSlideUp .55s ease forwards;
+                animation-delay:calc(var(--d, 0) * .09s);
+                cursor:default;
+                max-width:100%;
+            }
+            .yb-card:hover{
+                transform:translateY(-4px);
+                box-shadow:0 12px 24px rgba(17,24,39,.12), 0 4px 8px rgba(17,24,39,.06);
+            }
+            .yb-card.yb-outline{
+                background:rgba(255,255,255,.6);
+                padding:8px 18px;
+            }
+
+            .yb-icon{
+                flex:0 0 auto;
+                width:34px; height:34px;
+                border-radius:50%;
+                display:flex; align-items:center; justify-content:center;
+                font-size:.9rem;
+                background:color-mix(in srgb, var(--card-color, var(--yb-blue)) 14%, white);
+                color:var(--card-color, var(--yb-blue));
+            }
+            .yb-card-text{ display:flex; flex-direction:column; line-height:1.15; }
+            .yb-title{ font-weight:600; font-size:.86rem; white-space:nowrap; }
+            .yb-subtitle{ font-size:.68rem; color:#6B7280; font-weight:500; margin-top:2px; }
+
+            .yb-blue   { --card-color:var(--yb-blue); }
+            .yb-violet { --card-color:var(--yb-violet); }
+            .yb-orange { --card-color:var(--yb-orange); }
+            .yb-green  { --card-color:var(--yb-green); }
+            .yb-red    { --card-color:var(--yb-red); }
+
+            /* ---------- Flèches simples (arch-arrow) ---------- */
+            .yb-arrow{
+                position:relative;
+                width:2px;
+                height:22px;
+                background:linear-gradient(var(--yb-line), var(--yb-line));
+                margin:2px auto;
+                opacity:0;
+                animation:ybFadeIn .5s ease forwards, ybPulse 2.6s ease-in-out infinite;
+                animation-delay:calc(var(--d, 0) * .09s), calc(var(--d, 0) * .09s + .5s);
+            }
+            .yb-arrow.yb-small{ height:14px; margin:6px auto; }
+            .yb-arrow::after{
+                content:'';
+                position:absolute;
+                left:50%; bottom:-1px;
+                transform:translateX(-50%);
+                width:0; height:0;
+                border-left:5px solid transparent;
+                border-right:5px solid transparent;
+                border-top:7px solid var(--yb-line);
+            }
+
+            /* ---------- Connecteurs split / merge ---------- */
+            .yb-connector{
+                position:relative;
+                width:100%;
+                max-width:760px;
+                height:46px;
+                opacity:0;
+                animation:ybFadeIn .5s ease forwards;
+                animation-delay:calc(var(--d, 0) * .09s);
+            }
+            .yb-stem-top{
+                position:absolute; top:0; left:50%;
+                width:2px; height:18px;
+                background:var(--yb-line);
+                transform:translateX(-50%);
+            }
+            .yb-stem-bottom{
+                position:absolute; bottom:0; left:50%;
+                width:2px; height:18px;
+                background:var(--yb-line);
+                transform:translateX(-50%);
+            }
+            .yb-stem-bottom::after{
+                content:'';
+                position:absolute; left:50%; bottom:-1px;
+                transform:translateX(-50%);
+                width:0; height:0;
+                border-left:5px solid transparent;
+                border-right:5px solid transparent;
+                border-top:7px solid var(--yb-line);
+            }
+            .yb-h-bar{
+                position:absolute;
+                top:18px;
+                left:25%; right:25%;
+                height:2px;
+                background:var(--yb-line);
+            }
+            .yb-merge .yb-h-bar{ top:auto; bottom:18px; }
+            .yb-branch-line{
+                position:absolute;
+                width:2px; height:28px;
+                background:var(--yb-line);
+            }
+            .yb-split .yb-branch-line{ top:18px; }
+            .yb-split .yb-branch-line.yb-left{ left:25%; transform:translateX(-50%); }
+            .yb-split .yb-branch-line.yb-right{ left:75%; transform:translateX(-50%); }
+            .yb-split .yb-branch-line::after{
+                content:'';
+                position:absolute; left:50%; bottom:-1px;
+                transform:translateX(-50%);
+                width:0; height:0;
+                border-left:5px solid transparent;
+                border-right:5px solid transparent;
+                border-top:7px solid var(--yb-line);
+            }
+            .yb-merge .yb-branch-line{ bottom:18px; }
+            .yb-merge .yb-branch-line.yb-left{ left:25%; transform:translateX(-50%); }
+            .yb-merge .yb-branch-line.yb-right{ left:75%; transform:translateX(-50%); }
+
+            /* ---------- Branches (arch-branch) ---------- */
+            .yb-branches{
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                column-gap:32px;
+                width:100%;
+                max-width:760px;
+            }
+            .yb-branch{
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                gap:2px;
+            }
+
+            /* ---------- Badges YOLO ---------- */
+            .yb-badges{
+                display:flex;
+                flex-wrap:wrap;
+                justify-content:center;
+                gap:6px;
+                padding:8px 4px;
+                opacity:0;
+                animation:ybFadeIn .5s ease forwards;
+                animation-delay:calc(var(--d, 0) * .09s);
+            }
+            .yb-badge{
+                background:var(--yb-gray);
+                color:#374151;
+                font-size:.66rem;
+                font-weight:600;
+                padding:4px 11px;
+                border-radius:999px;
+                transition:background .2s ease, color .2s ease, transform .2s ease;
+                white-space:nowrap;
+            }
+            .yb-badge:hover{
+                background:#DBEAFE;
+                color:var(--yb-blue);
+                transform:translateY(-2px);
+            }
+
+            /* ---------- Grille des métriques ---------- */
+            .yb-metrics{
+                display:grid;
+                grid-template-columns:repeat(3, minmax(0,1fr));
+                gap:8px;
+                width:100%;
+                max-width:640px;
+                margin:6px auto 0;
+                opacity:0;
+                animation:ybFadeIn .5s ease forwards;
+                animation-delay:calc(var(--d, 0) * .09s);
+            }
+            .yb-metric{
+                display:flex;
+                align-items:center;
+                gap:7px;
+                background:color-mix(in srgb, var(--yb-green) 8%, white);
+                border:1px solid color-mix(in srgb, var(--yb-green) 22%, white);
+                color:#166534;
+                font-size:.66rem;
+                font-weight:600;
+                padding:6px 10px;
+                border-radius:12px;
+                white-space:nowrap;
+                overflow:hidden;
+                text-overflow:ellipsis;
+                transition:transform .2s ease, box-shadow .2s ease;
+            }
+            .yb-metric:hover{
+                transform:translateY(-2px);
+                box-shadow:0 6px 14px rgba(22,163,74,.15);
+            }
+            .yb-metric i{ color:var(--yb-green); font-size:.72rem; flex:0 0 auto; }
+
+            /* ---------- Keyframes ---------- */
+            @keyframes ybFadeIn{
+                from{ opacity:0; }
+                to{ opacity:1; }
+            }
+            @keyframes ybSlideUp{
+                from{ opacity:0; transform:translateY(16px); }
+                to{ opacity:1; transform:translateY(0); }
+            }
+            @keyframes ybPulse{
+                0%, 100%{ opacity:1; }
+                50%{ opacity:.55; }
+            }
+
+            /* ---------- Responsive ---------- */
+            @media (max-width:1366px){
+                .yb-title{ font-size:.8rem; }
+                .yb-metrics{ grid-template-columns:repeat(3, minmax(0,1fr)); }
+            }
+            @media (max-width:1024px){
+                .yb-branches{ column-gap:18px; }
+                .yb-metrics{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+                .yb-badge{ font-size:.62rem; padding:3px 9px; }
+            }
+            @media (max-width:760px){
+                .yb-branches{ grid-template-columns:1fr; row-gap:10px; }
+                .yb-connector.yb-split .yb-branch-line.yb-right,
+                .yb-connector.yb-merge .yb-branch-line.yb-right{ display:none; }
+                .yb-h-bar{ left:50%; right:50%; }
+            }
+        </style>
+
+        <script>
+            (function(){
+                var arch = document.currentScript.closest('.slide').querySelector('.yb-arch');
+                if(!arch) return;
+
+                var animated = arch.querySelectorAll('.yb-card, .yb-arrow, .yb-connector, .yb-badges, .yb-metrics');
+
+                function playSequence(){
+                    animated.forEach(function(el){
+                        el.style.animation = 'none';
+                        void el.offsetWidth; // reflow pour relancer l'animation
+                        el.style.animation = '';
+                    });
+                }
+
+                // Rejoue l'animation d'apparition à chaque fois que la slide redevient active
+                var slideSection = arch.closest('.slide');
+                if('IntersectionObserver' in window && slideSection){
+                    var observer = new IntersectionObserver(function(entries){
+                        entries.forEach(function(entry){
+                            if(entry.isIntersecting){ playSequence(); }
+                        });
+                    }, { threshold: 0.35 });
+                    observer.observe(slideSection);
+                }
+
+                // Léger effet de mise en avant au survol des cartes (en plus du hover CSS)
+                arch.querySelectorAll('.yb-card').forEach(function(card){
+                    card.addEventListener('mouseenter', function(){
+                        card.style.zIndex = 5;
+                    });
+                    card.addEventListener('mouseleave', function(){
+                        card.style.zIndex = '';
+                    });
+                });
+            })();
+        </script>
+
+    </div>
+</section>
+
+
+
+<!-- ======================= SLIDE — MÉTHODOLOGIE EXPÉRIMENTALE ======================= -->
+<section class="slide" data-title="Méthodologie expérimentale">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">08 — Méthodologie expérimentale</p>
+    <h2 class="slide-title reveal-item">Métriques de mesure de performance</h2>
+    <p class="meth-subtitle reveal-item">Sept indicateurs quantitatifs utilisés pour évaluer chaque modèle YOLO sur la plateforme de benchmark.</p>
+
+    <div class="meth-table-wrap reveal-item">
+      <table class="meth-table">
+        <colgroup>
+          <col class="c-metric"><col class="c-def"><col class="c-rel"><col class="c-obj">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Métrique</th>
+            <th>Définition</th>
+            <th>Relation mathématique</th>
+            <th>Objectif</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="metric-name">Taille du modèle (MB)</td>
+            <td class="def-cell">Taille du fichier de poids du modèle.</td>
+            <td class="rel-cell"><span class="dash">— (mesurée en Mo)</span></td>
+            <td class="obj-cell">Évaluer les besoins en stockage et le déploiement sur des systèmes embarqués.</td>
+          </tr>
+          <tr>
+            <td class="metric-name">Temps de chargement (ms)</td>
+            <td class="def-cell">Temps nécessaire pour charger le modèle en mémoire avant l'inférence.</td>
+            <td class="rel-cell">T<sub>chargement</sub> = t<sub>fin</sub> − t<sub>début</sub></td>
+            <td class="obj-cell">Mesurer le coût d'initialisation du modèle.</td>
+          </tr>
+          <tr>
+            <td class="metric-name">Temps d'inférence (ms)</td>
+            <td class="def-cell">Temps requis pour traiter une image et produire les détections.</td>
+            <td class="rel-cell">T<sub>inférence</sub> = t<sub>sortie</sub> − t<sub>entrée</sub></td>
+            <td class="obj-cell">Évaluer la rapidité d'exécution du modèle.</td>
+          </tr>
+          <tr>
+            <td class="metric-name">FPS</td>
+            <td class="def-cell">Nombre d'images traitées par seconde.</td>
+            <td class="rel-cell">FPS = 1 / T<sub>inférence</sub>(s) = 1000 / T<sub>inférence</sub>(ms)</td>
+            <td class="obj-cell">Mesurer les performances en temps réel.</td>
+          </tr>
+          <tr>
+            <td class="metric-name">Nombre de détections</td>
+            <td class="def-cell">Nombre total d'objets détectés après filtrage.</td>
+            <td class="rel-cell">N = Σ<sub>i=1</sub><sup>n</sup> 1</td>
+            <td class="obj-cell">Évaluer la capacité du modèle à identifier les objets présents.</td>
+          </tr>
+          <tr>
+            <td class="metric-name">Confiance moyenne (%)</td>
+            <td class="def-cell">Moyenne des scores de confiance des objets détectés.</td>
+            <td class="rel-cell">Conf<sub>moy</sub> = (1/N) · Σ<sub>i=1</sub><sup>N</sup> c<sub>i</sub></td>
+            <td class="obj-cell">Mesurer la fiabilité globale des prédictions.</td>
+          </tr>
+          <tr>
+            <td class="metric-name">Confiance maximale (%)</td>
+            <td class="def-cell">Score de confiance le plus élevé parmi les détections.</td>
+            <td class="rel-cell">Conf<sub>max</sub> = max(c<sub>1</sub>, c<sub>2</sub>, …, c<sub>N</sub>)</td>
+            <td class="obj-cell">Identifier le niveau maximal de certitude atteint par le modèle.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+
+
+<section class="slide" data-title="Résultats et démonstration">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">08 — Résultats et démonstration</p>
+    <h2 class="slide-title reveal-item">Résultats et démonstration</h2>
+    
+
+    <div class="res-shots reveal-stagger">
+
+      <div class="res-shot-card">
+        <div class="res-shot-caption">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M17 5h3a2 2 0 0 1-2 4M7 5H4a2 2 0 0 0 2 4"/></svg>
+          Résumé de la comparaison
+        </div>
+        <img src="assets/cap1.png" alt="Résumé de la comparaison des modèles YOLO">
+      </div>
+
+      <div class="res-shot-card">
+        <div class="res-shot-caption">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          Graphiques de performance
+        </div>
+        <img src="assets/cap2.png" alt="Graphiques : temps d'inférence, confiance moyenne, FPS, nombre de détections">
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<section class="slide" data-title="Résultats et démonstration">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">08 — Résultats et démonstration</p>
+    <h2 class="slide-title reveal-item">Résultats et démonstration</h2>
+    
+
+    <div class="res-shots reveal-stagger">
+
+      <div class="res-shot-card">
+        <div class="res-shot-caption">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><circle cx="8" cy="15" r="1.6"/><circle cx="13" cy="9" r="1.6"/><circle cx="18" cy="12" r="1.6"/></svg>
+          Vitesse vs précision
+        </div>
+        <img src="assets/cap3.png" alt="Nuage de points vitesse vs précision">
+      </div>
+
+      <div class="res-shot-card">
+        <div class="res-shot-caption">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg>
+          Résultats détaillés
+        </div>
+        <img src="assets/cap4.png" alt="Tableau des résultats détaillés par modèle">
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<section class="slide" data-title="Résultats et démonstration">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">08 — Résultats et démonstration</p>
+    <h2 class="slide-title reveal-item">Résultats et démonstration</h2>
+    
+
+    <div class="res-shots reveal-stagger">
+
+      <div class="res-shot-card">
+        <div class="res-shot-caption">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 16l-5-5-9 9"/></svg>
+          Aperçu des détections
+        </div>
+        <img src="assets/cap5.png" alt="Grille des détections par modèle sur une image de test">
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+
+<section class="slide" data-title="Conclusion">
+  <div class="slide-inner wide">
+
+    <p class="eyebrow">09 — Conclusion</p>
+    <h2 class="slide-title reveal-item">Conclusion</h2>
+    <p class="ccl-lead reveal-item">
+Ce travail a permis d'étudier l'évolution de la famille des modèles YOLO, d'analyser les principales innovations architecturales et leur impact sur les performances en détection d'objets. Une plateforme de benchmarking a été développée afin d'évaluer et de comparer les modèles selon la précision, la vitesse d'inférence, la taille et l'efficacité computationnelle, facilitant ainsi le choix du modèle le plus adapté à chaque contexte d'application.    </p>
+
+    <div class="ccl-grid reveal-stagger">
+      <div class="ccl-card">
+        <p class="ccl-card-label">Apport principal</p>
+        <h3 class="ccl-card-title">Une plateforme interactive de comparaison</h3>
+        <p class="ccl-card-text">
+          Le développement d'une plateforme qui automatise l'évaluation des modèles et facilite leur comparaison à l'aide d'indicateurs de performance et de visualisations intuitives — aidant les utilisateurs à sélectionner le modèle le plus adapté à leurs contraintes et à leurs besoins.
+        </p>
+
+        <div class="ccl-finding">
+          <span class="ccl-finding-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+          <p>Aucun modèle n'est universellement meilleur&nbsp;: le choix dépend toujours du compromis recherché entre précision, rapidité et coût de calcul.</p>
+        </div>
+      </div>
+
+      <div class="ccl-card">
+        <p class="ccl-persp-title">Perspectives</p>
+        <ul class="ccl-persp-list">
+          <li>Intégration des futures versions de YOLO</li>
+          <li>Ajout d'autres modèles de détection d'objets</li>
+          <li>Prise en charge de jeux de données personnalisés</li>
+          <li>Génération automatique de rapports d'évaluation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="slide" data-title="Merci">
+  <div class="slide-inner wide">
+
+<div class="ccl-closing reveal-item">
+      <div>
+        <p class="ccl-closing-text">Merci de votre attention.</p>
+        <p class="ccl-closing-sub">Je serai ravie de répondre à vos questions.</p>
+      </div>
+      <span class="ccl-qa-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 8.5a3.5 3.5 0 1 1 5.5 2.9c-1 .7-1.5 1.3-1.5 2.6"/><circle cx="12" cy="17.5" r=".9" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="10"/></svg>
+        Session de questions
+      </span>
+    </div>
+    </div>
+    </section>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
